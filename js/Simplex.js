@@ -57,7 +57,24 @@ function Generar(){
     alert(contenido);
     contenido+="<input type='radio' name='option' id='min'>Minimizar"+
     "<input type='radio' name='option' id='max'> Maximizar <br>"
-    +"  <center><button id='gen2' onclick='Generar2();' type='button' rel='tooltip' class='btn btn-info'> RESOLVER! </button> </center>"
+    +"  <center><button id='gen2' onclick='Generar2("+NV+","+NR+");' type='button' rel='tooltip' class='btn btn-info'> RESOLVER! </button> </center>"
     plano.innerHTML=contenido;
     
+}
+
+function Generar2(nv,nr){
+      
+    var rest = [];
+    for(var i=0;i<nr;i++){
+        rest.push(new Array(nv+1)); 
+    }
+    for(var i=0;i<nr;i++){
+
+        for(var j=0;j<nv+1;j++){
+            rest[i][j]=j+1;
+        }
+    }
+    
+    console.log(rest);
+
 }
