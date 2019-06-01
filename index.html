@@ -19,6 +19,7 @@ http://www.tooplate.com/view/2109-the-card
   <link rel="stylesheet" href="slick/slick-theme.css"> 
   <link rel="stylesheet" href="css/magnific-popup.css">
   <link rel="stylesheet" href="css/tooplate-style.css">
+  <script src="js/Simplex.js"></script>
   <!-- Templatemo style -->
 
 </head>
@@ -83,8 +84,13 @@ http://www.tooplate.com/view/2109-the-card
                 <h2 class="tm-text-blue mb-4">Metodo Simplex</h2>
                 
                 <td class="td-actions text-right">
-                    <button type="button" rel="tooltip" class="btn btn-info">
-                        <i class="material-icons">Añadir Nuevo Origen</i>
+                  Escriba el numero de Variables de la tabla: <input onchange="comp1('nvar','nres','gen');" style="width: 25%" type="number" name="nvar" id="nvar">
+                  <br>
+                  Escriba el numero de restricciones: <input  onchange="comp1('nvar','nres','gen');" style="width: 25%" type="number" name="nres" id="nres">
+                  <br>
+                  
+                    <button disabled id="gen" onclick="Generar();" type="button" rel="tooltip" class="btn btn-info">
+                        <i class="material-icons">Generar Tabla</i>
                     </button>
                     <!--
                     <button type="button" rel="tooltip" class="btn btn-success">
@@ -96,6 +102,11 @@ http://www.tooplate.com/view/2109-the-card
                   -->
                   <br><br>
                   <center>
+                  <diV id="Stabla1"> 
+
+
+                  
+                  <!-- TABLA DE SIMPLEX!!
                     <table class="table">
           <thead>
               <tr>
@@ -107,7 +118,7 @@ http://www.tooplate.com/view/2109-the-card
                   <th>X4</th>
                   <th>X5</th>
                   <th class="text-right">Bi</th>
-                  <!--<th class="text-right">Actions</th>-->
+                  <!--<th class="text-right">Actions</th>
               </tr>
           </thead>
           </thead>
@@ -135,6 +146,8 @@ http://www.tooplate.com/view/2109-the-card
             </tr>
         </tbody>
                     </table>
+                   -->       
+                  </diV>
                   </center>
             </section>
             <!-- Section 2 Metodo Transporte  -->
