@@ -41,7 +41,7 @@ function Generar(){
             "<option value='2'>≥</option>"+
             "<option value='3'>=</option></select> </td>";
         }
-        contenido+="<td> <input type='number' id='n"+j+"*"+i+"'> </td>";//se va poniendo cada cuadrito su id es : n(numero de restriccion)-(columna)
+        contenido+="<td> <input onchange='comp2("+NV+","+NR+",1, \"gen2\");' type='number' id='n"+j+"*"+i+"'> </td>";//se va poniendo cada cuadrito su id es : n(numero de restriccion)-(columna)
         }
     }
 
@@ -50,19 +50,55 @@ function Generar(){
         if(i==NV){
             contenido+="<td> </td>";
         }
-        contenido+="<td> <input type='number' id='Z"+i+"'> </td>"; 
+        contenido+="<td> <input onchange='comp2("+NV+",1,0, \"gen2\");' type='number' id='Z"+i+"'> </td>"; 
     }
     contenido+="</tbody> </table>";
 //-------------------------------------------------DIBUJA LAS OPCIONES DE MINIMZAR MAXIMIZAR y el boton resolver!----------------    
-    alert(contenido);
+    //alert(contenido); esto muestra lo que manda
     contenido+="<input type='radio' name='option' id='min'>Minimizar"+
     "<input type='radio' name='option' id='max'> Maximizar <br>"
     +"  <center><button id='gen2' onclick='Generar2("+NV+","+NR+");' type='button' rel='tooltip' class='btn btn-info'> RESOLVER! </button> </center> <br>"
     plano.innerHTML=contenido;
-    
+
 }
 
 var NVF;
+
+function comp2(nv,nr,t,obj){
+    var dato;//el que ira midiendo cada dato
+    var but = document.getElementById(obj);//boton generar
+    var n=-1;//usado para contar que almenos se repita 1 vez ya que debe comprobar no solo que las restricciones esten llenas sino que tambien Z
+    do{
+        n++;
+        for(var j=0;j<nr;j++){//restricciones
+            for(var i=0;i<=nv;i++){//variables hasta bi
+                if(t==1){//si esta verificando campos de una restriccion
+                    dato = document.getElementById("n"+j+"*"+i).value;//dato toma el valor de cada restriccion
+                }else{
+                    dato = document.getElementById("Z"+i).value; //dato toma el valor de cada Z
+                }
+
+                if(dato.toString().length >0){//si no esta vacio entonces activa el boton pero seguira iterando
+                
+                but.disabled=false;                
+
+                }else{//si llega a encontrar un dato vacio entonces desactiva el boton envia la alerta y termina de iterar
+                    but.disabled=true;
+                    alert("NO DEJE CAMPOS VACIOS si no hay variables coloque un 0");
+                    return;
+                }
+            }
+        }
+        if(t==1){//si evaluo todas las restricciones y no estaban vacias ahora evaluara Z
+            t=0;
+        }else{//si evaluaba Z y todas las partes no estaban vacias entonces evaluara ahora las restricciones
+            t=1;
+            nr = document.getElementById("nres").value;
+        }
+    }while(n==0);
+    
+}
+
 
 
 function Generar2(nv,nr){
@@ -191,7 +227,4 @@ var pos=[];
 
     plano2.innerHTML = contenido2;
     
-
-
-
 }
