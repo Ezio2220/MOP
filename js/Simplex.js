@@ -59,7 +59,8 @@ function Generar(){
     "<input type='radio' name='option' id='max'> Maximizar <br>"
     +"  <center><button id='gen2' onclick='Generar2("+NV+","+NR+");' type='button' rel='tooltip' class='btn btn-info'> RESOLVER! </button> </center> <br>"
     plano.innerHTML=contenido;
-
+    document.getElementById("Z"+NV).value = 0;
+    document.getElementById("Z"+NV).disabled = true;
 }
 
 var NVF;
@@ -84,7 +85,7 @@ function comp2(nv,nr,t,obj){
 
                 }else{//si llega a encontrar un dato vacio entonces desactiva el boton envia la alerta y termina de iterar
                     but.disabled=true;
-                    alert("NO DEJE CAMPOS VACIOS si no hay variables coloque un 0");
+                   // alert("NO DEJE CAMPOS VACIOS si no hay variables coloque un 0");
                     return;
                 }
             }
@@ -102,7 +103,20 @@ function comp2(nv,nr,t,obj){
 
 
 function Generar2(nv,nr){
+    var Typ;
+    if(document.getElementById("min").checked || document.getElementById("max").checked ){
+        if(document.getElementById("min").checked){
+            Typ="min";
+        }else{
+            Typ="max";
+        }
+    }else{
+        alert("ELIJA si maximizar o minimizar!");
+        return;
+    }
+
     NVF = nv;
+
     var Bi = [];
     var type = [];  
     var rest = [];
@@ -110,7 +124,7 @@ function Generar2(nv,nr){
     for(var i=0;i<nr;i++){
         rest.push(new Array(nv)); 
         type.push(document.getElementById("t"+i).value);
-        Bi.push(document.getElementById("n"+i+"*"+nv).value);
+        Bi.push(Number(document.getElementById("n"+i+"*"+nv).value));
     }
     Bi.push(document.getElementById("Z"+nv).value);
     for(var i=0;i<nr;i++){
@@ -150,7 +164,13 @@ var pos=[];
                     rest[i].push(0);
                 }
             }
-            Z.push(0);Z.push(1);
+            Z.push(0);
+            if(Typ=="min"){
+                Z.push(1);
+            }else{
+                Z.push(-1);
+            }
+            
             pos.push(NVF);
         }
         if(type[x]==3){
@@ -158,12 +178,19 @@ var pos=[];
             NVF+=1;
             for(var i=0;i<nr;i++){
                 if(i==x){
+                    
                     rest[i].push(1);
                 }else{
                     rest[i].push(0);
                 }
             }
-            Z.push(1);
+            if(Typ=="min"){
+                Z.push(1);
+            }else{
+                Z.push(-1);
+            }
+            
+
             pos.push(NVF);
         }
     }
@@ -173,9 +200,10 @@ var pos=[];
     console.log(Z);
     console.log(pos);
     var M = [];
-    for(var i=0;i<NVF;i++){
-        M.push(0);
+    for(var i=0;i<=NVF;i++){        
+        M.push(Math.round(0));
     }
+    console.log(M);
     var contenido2 = " ";
     contenido2+=" <h3><u>SOL</u></h3> <br> ";
     for(var i=0;i<nr;i++){
@@ -223,8 +251,120 @@ var pos=[];
     for(var i=0;i<NVF;i++){
         contenido2+="<td class='text-center'> "+Z[i]+" </td>";
     }
-    contenido2+="<td class='text-center'> "+Bi[nr]+"</td> </tr> </tbody> </table>";
+    contenido2+="<td class='text-center'> "+Bi[nr]+"</td> </tr> </tbody> </table> </br></br>";
+
+    plano2.innerHTML = contenido2;
+//----------------------------------------------------------------------------------------------------
+    
+    
+    for(var i=0;i<=NVF;i++){
+        
+        /*for(var x=0;x<pos.length;x++){
+        }*/
+        if(i==NVF){
+            for(var j=0;j<nr;j++){
+                if(type[j]==2 || type[j]==3){
+                   if(Typ=="min"){
+                     M[i] += Number(Bi[j]) ;   
+                   }else{
+                     M[i] -= Number(Bi[j]); 
+                   } 
+                  // alert(Bi[j]);
+                   
+                }
+            }
+            break;
+        }
+
+
+        for(var j=0;j<nr;j++){
+            if(type[j]==2 || type[j]==3){
+               if(Typ=="min"){
+                 M[i] += Number(rest[j][i]) ;   
+               }else{
+                 M[i] -= Number(rest[j][i]); 
+               } 
+               
+            }
+        }
+        Z[i]= Number(Z[i])*(-1);
+            
+    }
+
+    
+
+    contenido2 += "<table class='table'> <thead> <tr> <th class='text-center mx-auto'>V.b</th> ";
+    
+    for(var i=0;i<NVF;i++){
+        contenido2+="<th class='text-center'>X"+(i+1)+"</th>";
+    }
+    contenido2+="<th class='text-center'>Bi</th> </tr> </thead> <tbody>";
+
+    for(var i=0;i<nr;i++){
+        contenido2+="<tr> <td class='text-center'>X"+pos[i]+"</td>";
+        for(var j=0;j<NVF;j++){
+            contenido2+="<td class='text-center'> "+rest[i][j]+" </td>";
+        }
+        contenido2+="<td class='text-center'> "+Bi[i]+" </td></tr>";
+    }
+    contenido2+="<tr><td class='text-center'><b>Z</b></td>";
+    var s = "+";
+    for(var i=0;i<NVF;i++){
+        if(M[i]>0 && Z[i]!= 0){
+            s="+";
+        }else{
+            s="";
+        }
+        contenido2+="<td class='text-center'> ";
+        if(Z[i]!=0 || M[i]==0){
+            contenido2+=Z[i];
+        }
+        if(M[i]!=0){
+
+            
+            if(M[i]!= 1 && M[i] != -1){
+                contenido2+=s+M[i];
+            }else{
+                if(M[i]==-1){
+                    contenido2+="-";
+                }else{
+                    contenido2+="+";
+                }
+            }
+            contenido2+="M </td>";
+        }else{
+            contenido2+=" </td>";
+        }
+        
+    }
+    contenido2+="<td class='text-center'> ";
+    if(M[NVF]>0 && Bi[nr] != 0 ){
+        s="+";
+    }else{
+        s="";
+    }
+    if(Bi[nr]!=0 || M[NVF]==0 ){
+        contenido2+=Bi[nr];
+    }
+    if(M[NVF]!=0){
+        
+        if(M[NVF]!=1 && M[NVF]!= -1){
+            contenido2+=s+M[NVF];
+        }else{
+            if(M[NVF]==-1){
+                contenido+="-";
+            }else{
+                contenido2+="+";
+            }
+        }
+        contenido2+="M </td> </tr> </tbody> </table> </br></br>";
+    }else{
+        contenido2+="</td> </tr> </tbody> </table> </br></br>";
+    }
 
     plano2.innerHTML = contenido2;
     
+
+
+
 }
