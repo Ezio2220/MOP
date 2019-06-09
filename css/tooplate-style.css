@@ -356,13 +356,6 @@ figure.effect-goliath:hover p {
 }
 
 /* Contact */
-.tm-section-3 {
-  width: 100%;
-  max-width: 400px;
-  margin-left: 40px;
-  margin-right: auto;
-  margin-top: -50px;
-}
 
 .tm-contact-form {
   background-color: rgba(255, 255, 255, 0.7);
