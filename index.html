@@ -50,7 +50,7 @@ http://www.tooplate.com/view/2109-the-card
             <a href="#" data-linkid="2" data-align="middle" class="tm-nav-link">Metodo De TRANSPORTE</a>
           </li>
           <li class="tm-nav-item">
-            <a href="#" data-linkid="3" data-align="left" class="tm-nav-link">Otro metodo</a>
+            <a href="#" data-linkid="3" data-align="left" class="tm-nav-link">Metodo De Asignacion</a>
           </li>
         </ul>
       </nav>
@@ -166,23 +166,19 @@ http://www.tooplate.com/view/2109-the-card
                 <h2 class="tm-text-blue mb-4">Metodo de Asignacion</h2>
                 
                 <td class="td-actions text-right">
-                  Escriba el numero de Columnas: <input onchange="comp1('nCol','nFil','Gen');" style="width: 25%" type="number" name="nCol" id="nCol">
+                  Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="tabls_creation();" class="easypositive">
+                  <div id="matrix1" class="table"></div>
                   <br>
-                  Escriba el numero de Filas: <input  onchange="comp1('nCol','nFil','Gen');" style="width: 25%" type="number" name="nFil" id="nFil">
-                  <br>
-                  
-                    <button disabled id="Gen" onclick="GeneraR();" type="button" rel="tooltip" class="btn btn-info">
-                        <i class="material-icons">Generar Tabla</i>
-                    </button>
-
-                  <br><br>
-                  <center>
-              <diV id="Stabla3">       
-              </div>
-              <div id="Stabla4">
-
-                  </div>
-                  </center>
+                  <input type="button" value="Calcular" onclick="tqe_perc()" class="btn btn-info">
+                  <input type="reset" onclick="clearall()" value="Reajustar" class="btn btn-success">
+                  <div class="errClass" id="dynErrDisp" style="display: none;"></div><div id="calciScroll"></div>
+                    <br>
+                  <div class="group clearfix">
+                    ::before
+                  <label>Trabajo Asignado a Personas</label>
+                  <textarea id="output" rows="4" cols="30" readonly=""></textarea>
+                    ::after
+                  </div></div>
             </section>
 
   <script src="js/jquery-1.11.0.min.js"></script>

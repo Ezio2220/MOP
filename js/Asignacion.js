@@ -1,289 +1,499 @@
+/* 2 dimension arrays */
+ var skillMatrix=null;
+ var matrix=null;
+ //var stars=null;
+ /* Single arrays */
+ var rCov=[];
+ var cCov=[];
+ var rows=0;
+ var cols=0;
+ var dim=0;
+ var solutions=0; // "k"
+//var formation=[];
+//var squad=[];
+ FORBIDDEN_VALUE: -999999;
 
-function comp1(id1,id2,sujeto){
-    var c1 = document.getElementById(id1).value;
-    var c2 = document.getElementById(id2).value;
-    var but = document.getElementById(sujeto);
-    
+ 
+ var formation=new Array();
+ var squad=new Array();
+
+var v=[],id="",p=0,area=0,cx=0,cy=0,count=0;
+
+function checnum(as)
+{
+	  var a = as.value;
+	
+	  for(var x=0; x<a.length; x++)
+	  {
+	     var ff = a[x];
+	     if(isNaN(a) || ff==" ")
+	     {
+		  a = a.substring(0,(a.length-1));
+		  as.value = a;
+	     }	
+  	   }	
+}
+
+function tqe_perc()
+{
+          $("#output").val("");
+	count=$("#input").val();
+	if(count=="")
+	{
+	alert("INTRODUZCA EL TAMAÑO DE LA MATRIZ PARA REALIZAR EL EJERCICIO");
+	}
+	  else
+	   {
+	       count=parseFloat(count);//alert(count);
+		for(i=0;i<count;i++)
+		{
+		    v[i]=[];
+		 for(j=0;j<count;j++)
+		     {
+		          id="#i"+i+j;
+		          p=parseFloat($(id).val());//alert(i+"+"+j);
+                          if (isNaN(p))
+                          {
+                              return false;
+                          }
+                          else
+                          {
+		              v[i][j]=(p);//var test=i+""+j;       
+                          }
+		     }
+		}
+	   }
+	for(var i=0;i<count;i++)
+	{
+	formation[i]="M"+(i+1);
+	}
+	 for(var i=0;i<count;i++)
+	{
+	squad[i]="J"+(i+1);
+	}
+	matrix=v;
+	var result=hungarianAlgortithm(formation,squad);
+        $("#output").val(result);
+}
+
+//=======================
+function clearall()
+{
+	$("#input").val("");
+	$("#matrix1").html("");
+}
+
+//=======================
+
+var stars=null;
+function tabls_creation()
+{
+	document.getElementById("matrix1").innerHTML = ""; 
+        var count=$("#input").val();
+            if(count=="") count=0;
+	count = parseFloat(count);
+       
+        if(count>12)
+           {
+           alert("Ingrese valor entre 1 a 12");
+            }
+           else if(count!=0)
+	   {	
+	  // Declare variables and create the header, footer, and caption.
+	  var oTable = document.createElement("TABLE");
+	  var oTHead = document.createElement("THEAD");
+	  var oTBody = document.createElement("TBODY");
+	  var oRow, oCell;
+	  var i, j;
+		
+	  // Declare stock data that would normally be read in from a stock Web site.
+	  var heading = new Array();
+			
+	  heading[0] = "Empleos/Hombre";
+         for(var i=1;i<=count;i++)
+          {
+	  heading[i] = "J"+i;
+	  }
+	  // Insert the created elements into oTable.
+	  oTable.appendChild(oTHead);
+	  oTable.appendChild(oTBody);
+	  oTable.setAttribute("class","bg4");
+	  oTable.setAttribute("align","center");
+
+	  // Insert a row into the header and set its background color.
+	  oRow = document.createElement("TR");
+	  oTHead.appendChild(oRow);
+
+	  // Create and insert cells into the header row.
+	  for (a=0; a<heading.length; a++)
+	  {
+	    oCell = document.createElement("TH");
+	    oCell.innerHTML = heading[a];
+	    oRow.appendChild(oCell);
+	  }
+
+  	  var idval;
+	  var vali;
+	  // Insert rows and cells into bodies.
+	  for (i=0; i<count; i++)
+	  {
+	    oRow = document.createElement("TR");
+	    oRow.setAttribute("align","center");
+	    oTBody.appendChild(oRow);
+            oCell = document.createElement("TD");
+	    oCell.innerHTML = "M"+(i+1);
+	    oRow.appendChild(oCell);
+	    for (j=0;j<heading.length-1; j++)
+	    {
+	      oCell = document.createElement("TD");
+	      oCell.innerHTML = "<input type=text size=4 id=i"+i+j+" class='easynumeric'>";
+	      oRow.appendChild(oCell);
+	    }
+	  }
   
-    if(c1.toString().length && c2.toString().length>0){
-        if(c1>1 && c2>1){
-            
-            but.disabled=false;
-        }else{
-            but.disabled=true;
-        }
-    }else{
-        but.disabled=true;
-    }
-
+	// Insert the table into the document tree.
+	var frtb = document.getElementById("matrix1");
+	frtb.appendChild(oTable);
+     }
+     onkeyupValidationClass();
 }
 
-var nvariables;
-function GeneraR(){
-    var NV = document.getElementById("nCol").value;//se toma el numero de variables
-    var NR = document.getElementById("nFil").value;//se toma el numero de restricciones
-    var plano = document.getElementById("Stabla3");//se toma el lugar donde se metera todo esto
-//----------------------------------Dibuja el inicio de la tabla y el encabezados VS y cada una de las variables
-    var contenido = " ";
-    contenido+="<table class='table'><thead> <tr> "+
-               "<th class='text-center mx-auto'>VS</th>";
-    for(var i=0;i<NV;i++){//con este for se hace que se pongan todas las variables que se dijo que tendrian
-        contenido+="<th class='text-center mx-auto'>Y"+(i+1)+"</th>";
-    }
-    //se inicio arriba el cuerpo de la tabal y ahora aca abajo se ira iterando por cada restriccion existente
-    for(var j=0;j<NR;j++){
-        contenido+="<tr><td class='text-center mx-auto'>X"+(j+1)+"</td>";
-        for(var i=0;i<NV;i++){//y para cada restriccion se haran columnas por cada variable que se dijo que habria
-        contenido+="<td> <input onchange='comp2("+NV+","+NR+",1, \"gen2\");' type='number' id='n"+j+"*"+i+"'> </td>";//se va poniendo cada cuadrito su id es : n(numero de restriccion)-(columna)
-        }
-    }
+ function hungarianAlgortithm(squad,formation) {
+   init(formation, squad);
+   // Step 1
+   matrix = subtractRowMins(matrix);
+   // Step 2
+   findZeros(matrix);
+   var done = false;
+   while (!done) {
+     // Step 3
+     var covCols = coverColumns(matrix);
+     if (covCols > solutions -1) {
+       done = true;
+     }
+     if (!done) {
+    // Step 4 (calls Step 5)
+       done = coverZeros(matrix);
+       while (done) {
+         // Step 6
+         var smallest = findSmallestUncoveredVal(matrix);
+         matrix = uncoverSmallest(smallest, matrix);
+         done = coverZeros(matrix);
+       }
+     }
+   }
+   return getSolution(formation, squad);
+ }
+ 
+ function init(formation, squad) {
+   cols = squad.length;
+   rows = formation.length;
+   dim = Math.max(rows, cols);
+   solutions = dim;
+   skillMatrix = initMatrix(rows, cols);
+   matrix = initMatrix(dim, dim);
+   stars = initMatrix(dim, dim);
+   matrix = loadMatrix(squad, formation, matrix, false);
+   skillMatrix = loadMatrix(squad, formation, skillMatrix, false);
+ 
+   rCov = new Array(dim);
+   cCov = new Array(dim);
+   initArray(cCov, 0); // Zero it out
+   initArray(rCov, 0);
+ }
+ 
+ function initMatrix(sizeX, sizeY) {
+   var matrix = new Array(sizeX);
+   for (var i=0; i<sizeX; i++) {
+     matrix[i] = new Array(sizeY);
+     initArray(matrix[i], 0);
+   }
+   return matrix;
+ }
+ 
+ // Takes an array of positions as a formation.
+ // Takes a squad which contains an array of players
+ function loadMatrix(squad, formation, matrix, reverse) {
+   matrix =v;//loadYourMatrix(squad, formation, matrix); // I've removed my implementation here. Far too much stuff
+   if (reverse) {
+   // This reverses the matrix.  We need to to create a cost based solution.
+//     matrix = reverseMatrix(findMaxValue(matrix), matrix);
+     matrix = (findMaxValue(matrix), matrix);   
+   }
+   return matrix;
+ }
+ 
+ function findMaxValue(matrix) {
+   var max = 0.0;
+   for (var i = 0; i < matrix.length; i ++) {
+     for (var j = 0; j < matrix[i].length; j++) {
+       if (matrix[i][j] > max) {
+         max = matrix[i][j];
+       }
+     }
+   }
+   return Number(max);
+ }
+ 
+ function reverseMatrix(max, matrix) {
+   for (var i = 0; i < matrix.length; i ++) {
+     for (var j = 0; j < matrix[i].length; j++) {
+       matrix[i][j] = (Number(max) - Number(matrix[i][j])).toFixed(0);
+     }
+   }
+   return matrix;
+ }
+ 
+ function subtractRowMins(matrix) {
+   for (var i = 0; i < matrix.length; i ++) {
+     var min = Number.MAX_VALUE;
+     for (var j = 0; j < matrix[i].length; j++) {
+       if (matrix[i][j] < min) {
+         min = Number(matrix[i][j]);
+       }
+     }
+     for (var k = 0; k < matrix[i].length; k++) {
+       matrix[i][k] = matrix[i][k] - min;
+     }
+   }
+  return matrix;
+ }
+ 
+  function subtractColMins(matrix) {
+   for (var j = 0; j < matrix[0].length; j ++) {
+     var min = Number.MAX_VALUE;
+     for (var i = 0; i < matrix.length; i++) {
+       if (matrix[i][j] < min) {
+         min = Number(matrix[i][j]);
+       }
+     }
+     for (var k = 0; k < matrix[0].length; k++) {
+       matrix[k][j] = matrix[k][j] - min;
+     }
+   }
+   return matrix;
+ }
+ 
+ function findZeros(matrix) {
+   for (var i = 0; i < matrix.length; i++) {
+     for (var j = 0; j < matrix[i].length; j++) {
+       if (matrix[i][j] == 0) {
+         if (rCov[i] == 0 && cCov[j] == 0) {
+           stars[i][j] = 1;
+           cCov[j] = 1;
+           rCov[i] = 1;
+         }
+       }
+     }
+   }
+   // Clear Covers
+   initArray(cCov,0);
+   initArray(rCov,0);
+ }
+ 
+ function initArray(theArray, initVal) {
+   for (var i = 0; i < theArray.length; i++) {
+     theArray[i] = Number(initVal);
+   }
+ }
+ 
+ function coverColumns(matrix) {
+   var count = 0;
+   for (var i=0; i < matrix.length; i++) {
+     for (var j=0; j < matrix[i].length; j++) {
+       if (stars[i][j] == 1) {
+         cCov[j] = 1;
+       }
+     }
+   }
+   for (var k=0; k < cCov.length; k++) {
+     count = Number(cCov[k]) + Number(count);
+   }
+   return count;
+ }
+ 
+ 
+ function coverZeros(matrix) {
+   var retVal = true;
+  var zero = findUncoveredZero(matrix); // Returns a Coords object..
+   
+   while (zero.row > -1 && retVal == true) {
+     stars[zero.row][zero.col] = 2 //Prime it
+     var starCol = foundStarInRow(zero.row, matrix);
+     if (starCol > -1) {
+       rCov[zero.row] = 1;
+       cCov[starCol] = 0;
+     } else {
+       starZeroInRow(zero); // Step 5
+       retVal = false;
+     }
+     if (retVal == true) {
+       zero = findUncoveredZero(matrix);
+     }
+   }
+   return retVal;
+ }
+ 
+ function findUncoveredZero(matrix) {
+   var coords = new HgCoords();
+   for (var i=0; i< matrix.length; i++) {
+     for (var j=0; j < matrix[i].length; j++) {
+       if (matrix[i][j] == 0 && rCov[i] == 0 && cCov[j] == 0) {
+         coords.row = i;
+         coords.col = j;
+         j = matrix[i].length;
+         i = matrix.length - 1;
+       }
+     }
+ 
+   }
+   return coords;
+ }
+ 
+ function foundStarInRow(zeroRow, matrix) {
+   var retVal = -1;
+   for (var j = 0; j < matrix[zeroRow].length; j++) {
+     if (stars[zeroRow][j] == 1) {
+       retVal = j;
+       j = matrix[zeroRow].length;
+     }
+   }
+   return retVal;
+ }
+ 
+  
+ function starZeroInRow(zero) { // Takes a Coords Object
+  // log("Step 5: Uncovered Zero:" + zero.row + "," + zero.col, DEBUG );
+   var done = false;
+   var count = 0;
+   var path = initMatrix(dim*2, 2);
+ 
+   path[count][0] = zero.row;
+   path[count][1] = zero.col;
+   while (!done) {
+     var row = findStarInCol(path[count][1]);
+     if (row > -1) {
+       count++;
+       path[count][0] = row;
+       path[count][1] = path[count - 1][1];
+     } else {
+       done = true;
+       
+     }
+     if (!done) {
+       var col = findPrimeInRow(path[count][0]);
+       count++;
+       path[count][0] = path[count - 1][0];
+       path[count][1] = col;
+     }
+   }
+   convertPath(path, count);
+ 
+   // Clear Covers
+   initArray(cCov,0);
+   initArray(rCov,0);
+   erasePrimes();
+ }
+ 
+  function findStarInCol(col) {
+   var retVal = -1;
+   for (var i = 0; i < stars.length; i++) {
+     if (stars[i][col] == 1) {
+       retVal = i;
+       i = stars.length;
+     }
+   }
+   return retVal;
+ }
+ 
+  function findPrimeInRow(row) {
+   var retVal = -1;
+   for (var j=0; j< stars[row].length; j++) {
+     if (stars[row][j] == 2) {
+       retVal = j;
+       j = stars[row].length;
+     }
+   }
+   return retVal;
+ }
+ 
+  
+ function convertPath(path, count) {
+   //logMatrix(path, "Step 5: Converting Path.  Count = " + count);
+   for (var i=0; i < count+1; i++) {
+     var x = path[i][0];
+     var y = path[i][1];
+     if (stars[x][y] == 1) {
+       stars[x][y] = 0;
+     } else if (stars[x][y] == 2) {
+       stars[x][y] = 1;
+     }
+   }
+ }
+ 
+ function erasePrimes() {
+   for (var i=0; i<stars.length; i++) {
+     for (var j=0; j < stars[i].length; j++){
+       if (stars[i][j] == 2) {
+         stars[i][j] = 0;
+       }
+     }
+   }
+ }
+ 
+ function findSmallestUncoveredVal(matrix) {
+   var min = Number.MAX_VALUE;
+   for (var i = 0; i < matrix.length; i++) {
+     for (var j = 0; j < matrix[i].length; j++) {
+       if (rCov[i] == 0 && cCov[j] == 0) {
+         if (min > matrix[i][j]) {
+           min = matrix[i][j];
+         }
+       }
+     }
+   }
+   return min;
+ }
+ 
+  
+ function uncoverSmallest(smallest, matrix) {
+   //log("Uncover Smallest: "+ smallest);
+       //logMatrix(matrix, "B4 Smallest uncovered");
+ 
+   for (var i = 0; i < matrix.length; i++) {
+     for (var j = 0; j < matrix[i].length; j++) {
+       if (rCov[i] == 1) {
+         matrix[i][j] += smallest;
+       }
+       if (cCov[j] == 0) {
+         matrix[i][j] -= smallest;
+       }
+     }
+   }
+   //logMatrix(matrix, "Smallest uncovered");
+   return matrix;
+ }
+ 
+ function getSolution(formation, squad) {
+   var total = 0;
+   var lineup = '';
+    // Changed from length of stars, since we must ignore some rows due to padding.
+   for (var i = 0; i < rows; i++) {
+     for (var j = 0; j < cols; j++) {
+       if (stars[i][j] == 1) {
+      
+         lineup+=getplayer(i,j)+"\n";
+       }
+     }
+   }
+   return lineup;
+ }
 
-    contenido+="</tbody> </table>";
-//-------------------------------------------------DIBUJA LAS OPCIONES DE MINIMZAR MAXIMIZAR y el boton resolver!----------------    
-    //alert(contenido); esto muestra lo que manda
-    contenido+="<center><button id='gen2' onclick='GeneraR2("+NV+","+NR+");' type='button' rel='tooltip' class='btn btn-info'> RESOLVER! </button> </center> <br>"
-    plano.innerHTML=contenido;
+function getplayer(i,j)
+{
+return formation[i]+" = "+squad[j];
 }
-
-var NVF;
-
-function comp2(nv,nr,t,obj){
-    var dato;//el que ira midiendo cada dato
-    var but = document.getElementById(obj);//boton generar
-    var n=-1;//usado para contar que almenos se repita 1 vez ya que debe comprobar no solo que las restricciones esten llenas sino que tambien Z
-    do{
-        n++;
-        for(var j=0;j<nr;j++){//restricciones
-            for(var i=0;i<nv;i++){//variables 
-                if(t==1){//si esta verificando campos de una restriccion
-                    dato = document.getElementById("n"+j+"*"+i).value;//dato toma el valor de cada restriccion
-                }
-                if(dato.toString().length >0){//si no esta vacio entonces activa el boton pero seguira iterando
-                
-                but.disabled=false;                
-
-                }else{//si llega a encontrar un dato vacio entonces desactiva el boton envia la alerta y termina de iterar
-                    but.disabled=true;
-                   // alert("NO DEJE CAMPOS VACIOS si no hay variables coloque un 0");
-                    return;
-                }
-            }
-        }
-        if(t==1){//si evaluo todas las restricciones y no estaban vacias ahora evaluara Z
-            t=0;
-        }else{//si evaluaba Z y todas las partes no estaban vacias entonces evaluara ahora las restricciones
-            t=1;
-            nr = document.getElementById("nFil").value;
-        }
-    }while(n==0);
-    
-}
-function GeneraR2(nf,nc){
-
-    NVF = nv;
-    
-        var Bi = [];
-        var type = [];  
-        var rest = [];
-        var Z = new Array(nv); 
-        for(var i=0;i<nr;i++){
-            rest.push(new Array(nv)); 
-            type.push(document.getElementById("t"+i).value);
-            Bi.push(Number(document.getElementById("n"+i+"*"+nv).value));
-        }
-        Bi.push(document.getElementById("Z"+nv).value);
-        for(var i=0;i<nr;i++){
-    
-            for(var j=0;j<nv;j++){
-                rest[i][j]=document.getElementById("n"+i+"*"+j).value; 
-                Z[j]= document.getElementById("Z"+j).value;
-            }
-        }
-        
-     
-    var pos=[];
-    
-        for(var x=0;x<nr;x++){
-            if(type[x]== 1){
-                NVF+=1;
-                for(var i=0;i<nr;i++){
-                    if(i==x){
-                        rest[i].push(1);
-                    }else{
-                        rest[i].push(0);
-                    }
-                }
-                Z.push(0);
-                pos.push(NVF);
-            }
-            
-            if(type[x]==2){
-    
-                NVF+=2;
-                for(var i=0;i<nr;i++){
-                    if(i==x){
-                        rest[i].push(-1);
-                        rest[i].push(1);
-                    }else{
-                        rest[i].push(0);
-                        rest[i].push(0);
-                    }
-                }
-                Z.push(0);
-    
-                pos.push(NVF);
-            }
-            if(type[x]==3){
-    
-                NVF+=1;
-                for(var i=0;i<nr;i++){
-                    if(i==x){
-                        
-                        rest[i].push(1);
-                    }else{
-                        rest[i].push(0);
-                    }
-                }
-                
-    
-                pos.push(NVF);
-            }
-        }
-        
-        console.log(rest);
-        console.log(Bi);
-        console.log(Z);
-        console.log(pos);
-        var M = [];
-        for(var i=0;i<=NVF;i++){        
-            M.push(Math.round(0));
-        }
-        console.log(M);
-        var contenido2 = " ";
-        contenido2+=" <h3><u>SOL</u></h3> <br> ";
-        for(var i=0;i<nr;i++){
-            contenido2+=(i+1)+")";
-            for(var j=0;j<NVF;j++){
-                if(rest[i][j]!=0){
-                    
-                    if(rest[i][j] == 1){
-                        if(j!=0){
-                            contenido2+="+";
-                        }
-                        contenido2+= "X"+(j+1);
-                    }else if(rest[i][j] == -1){
-                        contenido2+= "-X"+(j+1);
-                    }else{
-                        if(j!=0){
-                            contenido2+="+";
-                        }
-                        contenido2+= rest[i][j]+"X"+(j+1);
-                    }
-                    
-                }
-                
-            }
-            contenido2+="<br>";
-        }
-        
-        var plano2 = document.getElementById("Stabla4");
-    
-        contenido2 += "<table class='table'> <thead> <tr> <th class='text-center mx-auto'>V.b</th> ";
-        
-        for(var i=0;i<NVF;i++){
-            contenido2+="<th class='text-center'>X"+(i+1)+"</th>";
-        }
-        contenido2+="<th class='text-center'>Bi</th> </tr> </thead> <tbody>";
-    
-        for(var i=0;i<nr;i++){
-            contenido2+="<tr> <td class='text-center'>X"+pos[i]+"</td>";
-            for(var j=0;j<NVF;j++){
-                contenido2+="<td class='text-center'> "+rest[i][j]+" </td>";
-            }
-            contenido2+="<td class='text-center'> "+Bi[i]+" </td></tr>";
-        }
-        contenido2+="<tr><td class='text-center'><b>Z</b></td>";
-        for(var i=0;i<NVF;i++){
-            contenido2+="<td class='text-center'> "+Z[i]+" </td>";
-        }
-        contenido2+="<td class='text-center'> "+Bi[nr]+"</td> </tr> </tbody> </table> </br></br>";
-    
-        plano2.innerHTML = contenido2;
-    //----------------------------------------------------------------------------------------------------
-        
-        
-    
-        contenido2 += "<table class='table'> <thead> <tr> <th class='text-center mx-auto'>V.b</th> ";
-        
-        for(var i=0;i<NVF;i++){
-            contenido2+="<th class='text-center'>X"+(i+1)+"</th>";
-        }
-        contenido2+="<th class='text-center'>Bi</th> </tr> </thead> <tbody>";
-    
-        for(var i=0;i<nr;i++){
-            contenido2+="<tr> <td class='text-center'>X"+pos[i]+"</td>";
-            for(var j=0;j<NVF;j++){
-                contenido2+="<td class='text-center'> "+rest[i][j]+" </td>";
-            }
-            contenido2+="<td class='text-center'> "+Bi[i]+" </td></tr>";
-        }
-        contenido2+="<tr><td class='text-center'><b>Z</b></td>";
-        var s = "+";
-        for(var i=0;i<NVF;i++){
-            if(M[i]>0 && Z[i]!= 0){
-                s="+";
-            }else{
-                s="";
-            }
-            contenido2+="<td class='text-center'> ";
-            if(Z[i]!=0 || M[i]==0){
-                contenido2+=Z[i];
-            }
-            if(M[i]!=0){
-    
-                
-                if(M[i]!= 1 && M[i] != -1){
-                    contenido2+=s+M[i];
-                }else{
-                    if(M[i]==-1){
-                        contenido2+="-";
-                    }else{
-                        contenido2+="+";
-                    }
-                }
-                contenido2+="M </td>";
-            }else{
-                contenido2+=" </td>";
-            }
-            
-        }
-        contenido2+="<td class='text-center'> ";
-        if(M[NVF]>0 && Bi[nr] != 0 ){
-            s="+";
-        }else{
-            s="";
-        }
-        if(Bi[nr]!=0 || M[NVF]==0 ){
-            contenido2+=Bi[nr];
-        }
-        if(M[NVF]!=0){
-            
-            if(M[NVF]!=1 && M[NVF]!= -1){
-                contenido2+=s+M[NVF];
-            }else{
-                if(M[NVF]==-1){
-                    contenido+="-";
-                }else{
-                    contenido2+="+";
-                }
-            }
-            contenido2+="M </td> </tr> </tbody> </table> </br></br>";
-        }else{
-            contenido2+="</td> </tr> </tbody> </table> </br></br>";
-        }
-    
-        plano2.innerHTML = contenido2;
-
-
-
+function HgCoords() {
+ row = -1;
+ col = -1;
 }
