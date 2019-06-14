@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <link rel="shortcut icon" href="img/pokeball.png" type="image/png">
   <title>Metodos de Optimizacion</title>
 <!--
 Template 2109 The Card
@@ -58,7 +58,7 @@ http://www.tooplate.com/view/2109-the-card
       <!-- Site header -->
       <header class="tm-site-header-box tm-bg-dark">
         <h1 class="tm-site-title">METODO DE OPTIMIZACION</h1>
-        <p class="mb-0 tm-site-subtitle">METODO SIMPLEX Y METODO DE TRANSPORTE</p>
+        <p class="mb-0 tm-site-subtitle">METODO SIMPLEX , METODO DE TRANSPORTE y METODO DE ASIGNACION </p>
       </header>
     </div>
     <!-- tm-top-container -->
@@ -74,7 +74,7 @@ http://www.tooplate.com/view/2109-the-card
               <h2 class="tm-section-title mb-3 font-weight-bold">Metodos De Optimizacion</h2>
               <div class="tm-textbox tm-bg-dark">
                 <p>El presente proyecto muestra los dos metodos en los cuales hemos trabajo.</p>
-                <p class="mb-0">METODO SIMPLEX Y METODO DE TRANSPORTE.</p>
+                <p class="mb-0">METODO SIMPLEX , METODO DE TRANSPORTE y METODO DE ASIGNACION.</p>
               </div>
               
             </section>
@@ -82,18 +82,22 @@ http://www.tooplate.com/view/2109-the-card
             <!-- Section 1 Metodo Simplex -->
             <section class="tm-section tm-section-1 mx-auto">
               <div class="tm-textbox tm-textbox-2 tm-bg-dark">
+                <center>
                 <h2 class="tm-text-blue mb-4">Metodo Simplex</h2>
-                
+                </center>
+                <center>
                 <td class="td-actions text-right">
                   Escriba el numero de Variables de la tabla: <input onchange="comp1('nvar','nres','gen');" style="width: 25%" type="number" name="nvar" id="nvar">
-                  <br>
+                  <br><br>
                   Escriba el numero de restricciones: <input  onchange="comp1('nvar','nres','gen');" style="width: 25%" type="number" name="nres" id="nres">
                   <br>
-                  
+                </center>
+                <br>
+                <center>
                     <button disabled id="gen" onclick="Generar();" type="button" rel="tooltip" class="btn btn-info">
                         <i class="material-icons">Generar Tabla</i>
                     </button>
-
+                </center>
                   <br><br>
                   <center>
               <diV id="Stabla1">       
@@ -169,16 +173,17 @@ http://www.tooplate.com/view/2109-the-card
                   Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="tabls_creation();" class="easypositive">
                   <div id="matrix1" class="table"></div>
                   <br>
-                  <input type="button" value="Calcular" onclick="tqe_perc()" class="btn btn-info">
-                  <input type="reset" onclick="clearall()" value="Reajustar" class="btn btn-success">
+                  <input type="button" value="Calcular" onclick="tqe_perc()" class="btn btn-info" style="width: 70%;">
+                  <input type="reset" onclick="clearall()" value="Reajustar" class="btn btn-success" style="width: 20%;">
                   <div class="errClass" id="dynErrDisp" style="display: none;"></div><div id="calciScroll"></div>
                     <br>
                   <div class="group clearfix">
-                    ::before
+                    
                   <label>Trabajo Asignado a Personas</label>
-                  <textarea id="output" rows="4" cols="30" readonly=""></textarea>
-                    ::after
+                  <textarea id="output" rows="3" cols="30" readonly=""></textarea>
+                    
                   </div></div>
+                  
             </section>
 
   <script src="js/jquery-1.11.0.min.js"></script>
