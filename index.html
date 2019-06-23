@@ -45,13 +45,13 @@ http://www.tooplate.com/view/2109-the-card
             <a href="#" data-linkid="0" data-align="right" class="tm-nav-link">Inicio</a>
           </li>
           <li class="tm-nav-item">
-            <a href="#" data-linkid="1" data-align="right" class="tm-nav-link">Metodo Simplex</a>
+            <a href="#" data-linkid="1" data-align="right" class="tm-nav-link">METODO SIMPLEX</a>
           </li>
           <li class="tm-nav-item">
-            <a href="#" data-linkid="2" data-align="middle" class="tm-nav-link">Metodo De TRANSPORTE</a>
+            <a href="#" data-linkid="2" data-align="middle" class="tm-nav-link">PENALIDAD</a>
           </li>
           <li class="tm-nav-item">
-            <a href="#" data-linkid="3" data-align="left" class="tm-nav-link">Metodo De Asignacion</a>
+            <a href="#" data-linkid="3" data-align="left" class="tm-nav-link">METODO DE ASIGNACION</a>
           </li>
         </ul>
       </nav>
@@ -59,7 +59,7 @@ http://www.tooplate.com/view/2109-the-card
       <!-- Site header -->
       <header class="tm-site-header-box tm-bg-dark">
         <h1 class="tm-site-title">METODO DE OPTIMIZACION</h1>
-        <p class="mb-0 tm-site-subtitle">METODO SIMPLEX , METODO DE TRANSPORTE y METODO DE ASIGNACION </p>
+        <p class="mb-0 tm-site-subtitle">METODO SIMPLEX , PENALIDAD y METODO DE ASIGNACION </p>
       </header>
     </div>
     <!-- tm-top-container -->
@@ -75,7 +75,7 @@ http://www.tooplate.com/view/2109-the-card
               <h2 class="tm-section-title mb-3 font-weight-bold">Metodos De Optimizacion</h2>
               <div class="tm-textbox tm-bg-dark">
                 <p>El presente proyecto muestra los dos metodos en los cuales hemos trabajo.</p>
-                <p class="mb-0">METODO SIMPLEX , METODO DE TRANSPORTE y METODO DE ASIGNACION.</p>
+                <p class="mb-0">METODO SIMPLEX , PENALIDAD y METODO DE ASIGNACION.</p>
               </div>
               
             </section>
@@ -84,7 +84,7 @@ http://www.tooplate.com/view/2109-the-card
             <section class="tm-section tm-section-1 mx-auto">
               <div class="tm-textbox tm-textbox-2 tm-bg-dark">
                 <center>
-                <h2 class="tm-text-blue mb-4">Metodo Simplex</h2>
+                <h2 class="tm-text-blue mb-4">METODO SIMPLEX</h2>
                 </center>
                 <center>
                 <td class="td-actions text-right">
@@ -110,8 +110,11 @@ http://www.tooplate.com/view/2109-the-card
             </section>
             <!-- Section 2 Metodo Transporte  -->
             <section class="tm-section tm-section-2 mx-auto">
+                <div class="tm-textbox tm-textbox-2 tm-bg-dark">
               <div class="ec_calculator_gen clearfix">
-                <h2> Minimum Transportation Cost Calculator | VAM Calculator</h2>
+                <center>
+                <h2 class="tm-text-blue mb-4"> PENALIDAD</h2>
+                </center>
                   <div class="clearfix"></div>	<div class="clear"></div>
                 <form name="first">
                  <div id="overlayLoader" style="top: 591.25px; display: none;">
@@ -119,17 +122,19 @@ http://www.tooplate.com/view/2109-the-card
                   </div>
                   <div id="dispCalcConts" style="opacity: 1;"><div class="group clearfix">
               <div class="group_con_45 clearfix">
-              <label>Number of Rows  </label>
+              <label>NUMERO DE FILAS  </label>
               <input type="text" id="nrw" class="easypositive-integer">
               </div>
+              <br>
               <div class="group_con_45 clearfix">
-              <label>Number of Columns  </label>
+              <label>NUMERO DE COLUMNAS  </label>
               <input type="text" id="ncn" class="easypositive-integer">
               </div>
               </div>
+              <br>
               <div class="group clearfix">
-              <input type="button" value="Create" onclick="matrix_form();" style="visibility: visible;">
-              <input type="reset" value="Reset" onclick="clear_all()" style="visibility: visible;"><div class="errClass" id="dynErrDisp" style="display: none;"></div><div id="calciScroll"></div>
+              <input type="button" value="CREAR" onclick="matrix_form(); "class="btn btn-info" style="visibility: visible; width: 70%;">
+              <input type="reset" value="REINICIAR" onclick="clear_all()" class="btn btn-success" style="visibility: visible; width: 25%;"><div class="errClass" id="dynErrDisp" style="display: none;"></div><div id="calciScroll"></div>
               </div>
               <div id="frtab" class="table"></div>
               <div class="result">
@@ -137,12 +142,13 @@ http://www.tooplate.com/view/2109-the-card
                </div>
                   </div>	</form>
                    </div>
+                </div>
             </section>
             
             <!-- Section 3 Asignacion -->
             <section class="tm-section tm-section-3 mx-auto">
               <div class="tm-textbox tm-textbox-2 tm-bg-dark">
-                <h2 class="tm-text-blue mb-4">Metodo de Asignacion</h2>
+                <h2 class="tm-text-blue mb-4">METODO DE ASIGNACION</h2>
                 
                 <td class="td-actions text-right">
                   Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="tabls_creation();" class="easypositive">
