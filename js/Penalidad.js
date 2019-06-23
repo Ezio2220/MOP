@@ -65,19 +65,19 @@ function matrix_form()
 			}
 		} 
 		
-		// Declare variables and create the header, footer, and caption.
+		// Declare variables y crea el header, footer, y caption.
 		var oTable = document.createElement("TABLE");
 		var oTHead = document.createElement("THEAD");
 		var oTBody = document.createElement("TBODY");
 		var oRow, oCell;
 		var i, j;
 		
-	   	// Insert the created elements into oTable.
+	   	// Inserta los elementos creados en oTable.
 		  oTable.appendChild(oTHead);
 		  oTable.appendChild(oTBody);
 		  oTable.setAttribute("class","bg5");
 
-		// Inserted the Heading elemnts into table
+		// Inserta los elementos del encabezado en la tabla
 		  oRow = document.createElement("TR");
 		  oTHead.appendChild(oRow);
 		  for (i=0; i<=(ncn+1); i++)
@@ -98,7 +98,7 @@ function matrix_form()
 			    oRow.appendChild(oCell);
 		  }
 
-		// Insert rows and cells into bodies.
+		// Inserta filas y celdas en el cuerpo.
 		for (i=0; i<tabary.length; i++)
 		{
 		    oRow = document.createElement("TR");
