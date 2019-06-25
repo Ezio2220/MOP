@@ -259,7 +259,7 @@ var pos=[];
     plano2.innerHTML = contenido2;
 //----------------------------------------------------------------------------------------------------
     
-    
+    //agregacion de los M de Z
     for(var i=0;i<=NVF;i++){
         
         /*for(var x=0;x<pos.length;x++){
@@ -291,9 +291,18 @@ var pos=[];
             }
         }
         Z[i]= Number(Z[i])*(-1);
-            
-    }
+       // alert(Z[i]);    
 
+    }
+    //PARA ELIMINAR LOS M que se agregaron al inicio a Z con >= e =
+    for(var i=0;i<pos.length;i++){
+       // alert(pos[i]-1+"--"+ Z[pos[i]-1]+"+"+M[pos[i]-1]);
+        Z[pos[i]-1] += Number(M[pos[i]-1]);
+        if(Number(Z[pos[i]-1])==0){
+            M[pos[i]-1]=0;
+        }
+    }
+ 
     
 
     contenido2 += "<table class='table'> <thead> <tr> <th class='text-center mx-auto'>V.b</th> ";
@@ -313,30 +322,31 @@ var pos=[];
     contenido2+="<tr><td class='text-center'><b>Z</b></td>";
     var s = "+";
     for(var i=0;i<NVF;i++){
-        if(M[i]>0 && Z[i]!= 0){
+        if(Z[i]>0 && M[i]!= 0){
             s="+";
         }else{
             s="";
         }
         contenido2+="<td class='text-center'> ";
-        if(Z[i]!=0 || M[i]==0){
-            contenido2+=Z[i];
-        }
+        
         if(M[i]!=0){
 
             
             if(M[i]!= 1 && M[i] != -1){
-                contenido2+=s+M[i];
+                contenido2+=M[i];
             }else{
                 if(M[i]==-1){
                     contenido2+="-";
                 }else{
-                    contenido2+="+";
+                    //contenido2+="+";
                 }
             }
-            contenido2+="M </td>";
+            contenido2+="M";
         }else{
-            contenido2+=" </td>";
+           // contenido2+=" </td>";
+        }
+        if(Z[i]!=0 || M[i]==0){
+            contenido2+=s+Z[i]+"</td>";
         }
         
     }
@@ -346,13 +356,11 @@ var pos=[];
     }else{
         s="";
     }
-    if(Bi[nr]!=0 || M[NVF]==0 ){
-        contenido2+=Bi[nr];
-    }
+    
     if(M[NVF]!=0){
         
         if(M[NVF]!=1 && M[NVF]!= -1){
-            contenido2+=s+M[NVF];
+            contenido2+=M[NVF];
         }else{
             if(M[NVF]==-1){
                 contenido+="-";
@@ -363,6 +371,9 @@ var pos=[];
         contenido2+="M </td> </tr> </tbody> </table> </br></br>";
     }else{
         contenido2+="</td> </tr> </tbody> </table> </br></br>";
+    }
+    if(Bi[nr]!=0 || M[NVF]==0 ){
+        contenido2+=s+Bi[nr];
     }
 
     plano2.innerHTML = contenido2;
