@@ -417,7 +417,7 @@ do{
     nvs = Number(Bi[0])/Number(rest[0][ve]);
     //console.log( "esto es: "+nvs+"con:"+Bi[0]+"/"+rest[0][ve]);
     for(var i=1;i<nr;i++){
-       alert(i+"esto es: "+nvs+"con:"+Bi[i]+"/"+rest[i][ve]);
+     //  alert(i+"esto es: "+nvs+"con:"+Bi[i]+"/"+rest[i][ve]);
         if( (Number(Bi[i])/Number(rest[i][ve])) < nvs ){
             vs=Number(pos[i]); nvs= (Number(Bi[i])/Number(rest[i][ve]));
         }
@@ -587,7 +587,7 @@ do{
         valid=true;
         for(var j=0;j<pos.length;j++){
             if(pos[j]==i+1){
-                alert(pos[j]+"y tambien "+Bi[j]);
+               // alert(pos[j]+"y tambien "+Bi[j]);
                 contenido2+=" <h4>X<sub>"+Number(i+1)+"</sub>="+Bi[j]+"</h4> <br> ";
                 valid=false;
             }
