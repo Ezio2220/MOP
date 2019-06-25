@@ -65,7 +65,7 @@ function matrix_form()
 			}
 		} 
 		
-		// Declare variables y crea el header, footer, y caption.
+		// Declare variables and create the header, footer, and caption.
 		var oTable = document.createElement("TABLE");
 		var oTHead = document.createElement("THEAD");
 		var oTBody = document.createElement("TBODY");
@@ -77,7 +77,7 @@ function matrix_form()
 		  oTable.appendChild(oTBody);
 		  oTable.setAttribute("class","bg5");
 
-		// Inserta los elementos del encabezado en la tabla
+		// Inserted the Heading elemnts into table
 		  oRow = document.createElement("TR");
 		  oTHead.appendChild(oRow);
 		  for (i=0; i<=(ncn+1); i++)
@@ -98,7 +98,7 @@ function matrix_form()
 			    oRow.appendChild(oCell);
 		  }
 
-		// Inserta filas y celdas en el cuerpo.
+		// Insert rows and cells into bodies.
 		for (i=0; i<tabary.length; i++)
 		{
 		    oRow = document.createElement("TR");
@@ -293,5 +293,16 @@ function northwest_corner()
 			  }
 		  } 
 	  }
-    }
+	  
+	  var datastring = "values="+values+"&supply="+supply+"&demand="+demand+"&nrw="+nrw+"&ncn="+ncn;
+	  var pathurl = "vogel-approximation.php"; 
+	  $.ajax({
+		  type:"POST",
+		  url:pathurl,
+		  data:datastring,
+		  success:function(html){
+		  $('#result').html(html);
+		  }
+	       });
+	}
 }
