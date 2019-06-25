@@ -2,18 +2,21 @@
 function comp1(id1,id2,sujeto){
     var c1 = document.getElementById(id1).value;
     var c2 = document.getElementById(id2).value;
-    var but = document.getElementById(sujeto);
+ //   var but = document.getElementById(sujeto);
     
   
     if(c1.toString().length && c2.toString().length>0){
         if(c1>1 && c2>1){
             
-            but.disabled=false;
+            //but.disabled=false;
+            Generar();
         }else{
-            but.disabled=true;
+            document.getElementById("Stabla1").innerHTML=" ";
+           // but.disabled=true;
         }
     }else{
-        but.disabled=true;
+        document.getElementById("Stabla1").innerHTML=" ";
+        //but.disabled=true;
     }
 
 }
