@@ -123,18 +123,21 @@ function Generar2(nv,nr){
     var Bi = [];
     var type = [];  
     var rest = [];
+    var Mi = [];
     var Z = new Array(nv); 
     for(var i=0;i<nr;i++){
+        Mi.push(new Array(nv)); 
         rest.push(new Array(nv)); 
-        type.push(document.getElementById("t"+i).value);
+        type.push( Number(document.getElementById("t"+i).value) );
         Bi.push(Number(document.getElementById("n"+i+"*"+nv).value));
     }
     Bi.push(document.getElementById("Z"+nv).value);
     for(var i=0;i<nr;i++){
 
         for(var j=0;j<nv;j++){
-            rest[i][j]=document.getElementById("n"+i+"*"+j).value; 
-            Z[j]= document.getElementById("Z"+j).value;
+            Mi[i][j]= 0;
+            rest[i][j]= Number(document.getElementById("n"+i+"*"+j).value); 
+            Z[j]= Number(document.getElementById("Z"+j).value);
         }
     }
     
@@ -144,6 +147,7 @@ var pos=[];
     for(var x=0;x<nr;x++){
         if(type[x]== 1){
             NVF+=1;
+            Mi[i].push(0);
             for(var i=0;i<nr;i++){
                 if(i==x){
                     rest[i].push(1);
@@ -166,6 +170,8 @@ var pos=[];
                     rest[i].push(0);
                     rest[i].push(0);
                 }
+                Mi[i].push(0);
+                Mi[i].push(0);
             }
             Z.push(0);
             if(Typ=="min"){
@@ -180,6 +186,7 @@ var pos=[];
 
             NVF+=1;
             for(var i=0;i<nr;i++){
+                Mi[i].push(0);
                 if(i==x){
                     
                     rest[i].push(1);
@@ -202,15 +209,18 @@ var pos=[];
     console.log(Bi);
     console.log(Z);
     console.log(pos);
+    console.log("esta wea");
+    console.log(Mi);
     var M = [];
     for(var i=0;i<=NVF;i++){        
         M.push(Math.round(0));
     }
     console.log(M);
+    //----------------------------------------------------SOLUCION
     var contenido2 = " ";
     contenido2+=" <h3><u>SOL</u></h3> <br> ";
     for(var i=0;i<nr;i++){
-        contenido2+=(i+1)+")";
+        contenido2+=(i+1)+") ";
         for(var j=0;j<NVF;j++){
             if(rest[i][j]!=0){
                 
@@ -218,14 +228,14 @@ var pos=[];
                     if(j!=0){
                         contenido2+="+";
                     }
-                    contenido2+= "X"+(j+1);
+                    contenido2+= "X<sub>"+(j+1)+"</sub>";
                 }else if(rest[i][j] == -1){
-                    contenido2+= "-X"+(j+1);
+                    contenido2+= "-X<sub>"+(j+1)+"</sub>";
                 }else{
                     if(j!=0){
                         contenido2+="+";
                     }
-                    contenido2+= rest[i][j]+"X"+(j+1);
+                    contenido2+= rest[i][j]+"X<sub>"+(j+1)+"</sub>";
                 }
                 
             }
@@ -236,7 +246,7 @@ var pos=[];
     
     var plano2 = document.getElementById("Stabla2");
 
-    contenido2 += "<table class='table'> <thead> <tr> <th class='text-center mx-auto'>V.b</th> ";
+    /*contenido2 += "<table class='table'> <thead> <tr> <th class='text-center mx-auto'>V.b</th> ";
     
     for(var i=0;i<NVF;i++){
         contenido2+="<th class='text-center'>X"+(i+1)+"</th>";
@@ -255,7 +265,7 @@ var pos=[];
         contenido2+="<td class='text-center'> "+Z[i]+" </td>";
     }
     contenido2+="<td class='text-center'> "+Bi[nr]+"</td> </tr> </tbody> </table> </br></br>";
-
+*/
     plano2.innerHTML = contenido2;
 //----------------------------------------------------------------------------------------------------
     
@@ -290,11 +300,13 @@ var pos=[];
                
             }
         }
-        Z[i]= Number(Z[i])*(-1);
+        if(Number(Z[i])!=0){
+            Z[i]= Number(Z[i])*(-1);
+        }
        // alert(Z[i]);    
 
     }
-    //PARA ELIMINAR LOS M que se agregaron al inicio a Z con >= e =
+    //------------------------------------PARA ELIMINAR LOS M que se agregaron al inicio a Z con >= e =
     for(var i=0;i<pos.length;i++){
        // alert(pos[i]-1+"--"+ Z[pos[i]-1]+"+"+M[pos[i]-1]);
         Z[pos[i]-1] += Number(M[pos[i]-1]);
@@ -377,8 +389,11 @@ var pos=[];
     }
 
     plano2.innerHTML = contenido2;
+    //---------------------------------------------------------------iteraciones    
+    contenido2= " ";
+    contenido2+=" <h3><u>SOL</u></h3> <br> ";
     
-
+    
 
 
 }
