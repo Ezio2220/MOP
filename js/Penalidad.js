@@ -72,7 +72,7 @@ function matrix_form()
 		var oRow, oCell;
 		var i, j;
 		
-	   	// Inserta los elementos creados en oTable.
+	   	// Insert the created elements into oTable.
 		  oTable.appendChild(oTHead);
 		  oTable.appendChild(oTBody);
 		  oTable.setAttribute("class","bg5");
