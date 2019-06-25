@@ -117,7 +117,7 @@ function Generar2(nv,nr){
         alert("ELIJA si maximizar o minimizar!");
         return;
     }
-
+    var nv1 = nv;
     NVF = nv;
 
     var Bi = [];
@@ -126,7 +126,7 @@ function Generar2(nv,nr){
     var Mi = [];
     var Z = new Array(nv); 
     for(var i=0;i<nr;i++){
-        Mi.push(new Array(nv)); 
+      //  Mi.push(new Array(nv)); 
         rest.push(new Array(nv)); 
         type.push( Number(document.getElementById("t"+i).value) );
         Bi.push(Number(document.getElementById("n"+i+"*"+nv).value));
@@ -135,7 +135,7 @@ function Generar2(nv,nr){
     for(var i=0;i<nr;i++){
 
         for(var j=0;j<nv;j++){
-            Mi[i][j]= 0;
+            Mi[j]= 0;
             rest[i][j]= Number(document.getElementById("n"+i+"*"+j).value); 
             Z[j]= Number(document.getElementById("Z"+j).value);
         }
@@ -147,7 +147,7 @@ var pos=[];
     for(var x=0;x<nr;x++){
         if(type[x]== 1){
             NVF+=1;
-            Mi[i].push(0);
+            //Mi[i].push(0);
             for(var i=0;i<nr;i++){
                 if(i==x){
                     rest[i].push(1);
@@ -170,8 +170,8 @@ var pos=[];
                     rest[i].push(0);
                     rest[i].push(0);
                 }
-                Mi[i].push(0);
-                Mi[i].push(0);
+              /*  Mi[i].push(0);
+                Mi[i].push(0);*/
             }
             Z.push(0);
             if(Typ=="min"){
@@ -186,7 +186,7 @@ var pos=[];
 
             NVF+=1;
             for(var i=0;i<nr;i++){
-                Mi[i].push(0);
+               // Mi[i].push(0);
                 if(i==x){
                     
                     rest[i].push(1);
@@ -380,20 +380,226 @@ var pos=[];
                 contenido2+="+";
             }
         }
-        contenido2+="M </td> </tr> </tbody> </table> </br></br>";
+        contenido2+="M";
     }else{
-        contenido2+="</td> </tr> </tbody> </table> </br></br>";
+       // contenido2+="</td> </tr> </tbody> </table> </br></br>";
     }
     if(Bi[nr]!=0 || M[NVF]==0 ){
-        contenido2+=s+Bi[nr];
+        contenido2+=s+Bi[nr]+" </td> </tr> </tbody> </table> </br></br>";
     }
 
     plano2.innerHTML = contenido2;
-    //---------------------------------------------------------------iteraciones    
+    //-------------------------------------------------------------------------------------------------------------------iteraciones    
     contenido2= " ";
-    contenido2+=" <h3><u>SOL</u></h3> <br> ";
+    contenido2+=" <h3><u>R//:</u></h3> <br> ";
+    var ve;var nve; var vs; var nvs;
+   // var temporal = rest;
+   // console.log(temporal);
     
+do{
+   //--------------------------------------------------------VARIABLE DE ENTRADA  
+    ve=0;
+    nve=Number(Z[0])+(Number(M[0])*99999);
+    for(var i=1;i<NVF;i++){
+        console.log(nve+ " :: "+nve);
+        if(Typ=="min"){
+            if(Number(Z[i])+(Number(M[i])*99999) > nve  && Number(Z[i])+(Number(M[i])*99999) !=0 ){
+                ve=Number(i); nve=Number(Z[i])+(Number(M[i])*99999);
+            }
+        }else{
+            if(Number(Z[i])+(Number(M[i])*99999) < nve && Number(Z[i])+(Number(M[i])*99999) !=0 ){
+                ve=Number(i); nve=Number(Z[i])+(Number(M[i])*99999);
+            }
+        }
+    }
+//-----------------------------------------------------------------VARIABLE DE SALIDA
+    vs=pos[0];
+    nvs = Number(Bi[0])/Number(rest[0][ve]);
+    //console.log( "esto es: "+nvs+"con:"+Bi[0]+"/"+rest[0][ve]);
+    for(var i=1;i<nr;i++){
+       alert(i+"esto es: "+nvs+"con:"+Bi[i]+"/"+rest[i][ve]);
+        if( (Number(Bi[i])/Number(rest[i][ve])) < nvs ){
+            vs=Number(pos[i]); nvs= (Number(Bi[i])/Number(rest[i][ve]));
+        }
+    }
+    //---------------------------------------------------numero de var de salida
+    var pvs;
+    console.log("VE: X"+Number(ve+1)+" Y VS: X"+Number(vs));
+   // alert("VE: X"+Number(ve+1)+" Y VS: X"+Number(vs));
+    for(var i=0;i<pos.length;i++){
+        if(pos[i]==vs){
+            pos[i]=Number(ve+1);
+            pvs=i;
+            i=pos.length;
+        }
+    }
+    
+    //-----------------------------------------------------calculo de nueva fila
+    var operator;
+    operator = Number(rest[pvs][ve]);
+    for(var i=0;i<NVF;i++){
+        rest[pvs][i]=Number(rest[pvs][i]/operator);
+    }
+    Bi[pvs]=Number(Bi[pvs]/operator);
+//-------------------------------------------------creacion de las siguientes filas
+    var n;
+    if(pvs>0){
+        n=0;
+    }else{
+        n=1;
+    }
+    var opaux;
+    for(var i=n;i<nr;i++){
+        operator = Number(rest[i][ve])*(-1);
+        console.log("para i"+i+" es :"+operator);
+        for(var j=0;j<NVF;j++){
+            opaux=Number(rest[pvs][j]);
+            console.log(opaux+"y asi queda mult"+Number(opaux*operator+rest[i][j]));
+            //*Number(rest[pvs][j]
+            rest[i][j]=Number( operator*opaux + rest[i][j]);
+        }
+        opaux=Number(Bi[pvs]);
+        Bi[i]=Number( operator*opaux + Bi[i]);
+        if(i+1 == pvs){
+            i++;
+        }
+    }
+
+    //para mostrar en tabla se redondea con Math.round10(n, -2);
+    
+    console.log(rest);
+    console.log(Bi);
+    //----------------------------para la nueva Z
+        operator=Number(Z[ve]*(-1));
+       // alert(operator);
+        opaux = Number(M[ve]*(-1));
+    for(var i=0;i<NVF;i++){
+        
+        Z[i]=Number(operator*rest[pvs][i]+Z[i]);
+        //alert( "Z:"Z[i]);
+        //console.log("Z:"+Z[i]+" viene de: "+Number(operator*rest[pvs][i]));
+        M[i]=Number(opaux*rest[pvs][i]+M[i]);
+        if(i+1==NVF){
+            
+            Bi[nr]=Number(operator*Bi[pvs]+Number(Bi[nr]));
+            console.log("Bi:"+Bi[nr]+" viene de: "+Number(Bi[pvs]));
+            M[NVF]=Number(opaux*Bi[pvs]+M[NVF]);
+        }
+    }
+
+    
+    
+    console.log(Z);
+    console.log(M);
+    console.log(Bi);
+//-------------------------------------------------varificar si ya esta la respuesta
+
+    var valid = true;
+    for(var i=0;i<NVF;i++){
+        if(Typ=="min"){
+            if(Number(Z[i])+(Number(M[i])*99999) > 0 ){
+                valid=false;
+            }
+        }else{
+            if(Number(Z[i])+(Number(M[i])*99999) < 0 ){
+                valid=false;
+            }
+        }
+    }
     
 
+    
+    contenido2 += "<table class='table'> <thead> <tr> <th class='text-center mx-auto'>V.b</th> ";
+    
+    for(var i=0;i<NVF;i++){
+        contenido2+="<th class='text-center'>X"+(i+1)+"</th>";
+    }
+    contenido2+="<th class='text-center'>Bi</th> </tr> </thead> <tbody>";
+
+    for(var i=0;i<nr;i++){
+        contenido2+="<tr> <td class='text-center'>X"+pos[i]+"</td>";
+        for(var j=0;j<NVF;j++){
+            contenido2+="<td class='text-center'> "+rest[i][j]+" </td>";
+        }
+        contenido2+="<td class='text-center'> "+Bi[i]+" </td></tr>";
+    }
+    contenido2+="<tr><td class='text-center'><b>Z</b></td>";
+    var s = "+";
+    for(var i=0;i<NVF;i++){
+        if(Z[i]>0 && M[i]!= 0){
+            s="+";
+        }else{
+            s="";
+        }
+        contenido2+="<td class='text-center'> ";
+        
+        if(M[i]!=0){
+
+            
+            if(M[i]!= 1 && M[i] != -1){
+                contenido2+=M[i];
+            }else{
+                if(M[i]==-1){
+                    contenido2+="-";
+                }else{
+                    //contenido2+="+";
+                }
+            }
+            contenido2+="M";
+        }else{
+           // contenido2+=" </td>";
+        }
+        if(Z[i]!=0 || M[i]==0){
+            contenido2+=s+Z[i]+"</td>";
+        }
+        
+    }
+    contenido2+="<td class='text-center'> ";
+    if(M[NVF]>0 && Bi[nr] != 0 ){
+        s="+";
+    }else{
+        s="";
+    }
+    
+    if(M[NVF]!=0){
+        
+        if(M[NVF]!=1 && M[NVF]!= -1){
+            contenido2+=M[NVF];
+        }else{
+            if(M[NVF]==-1){
+                contenido+="-";
+            }else{
+                contenido2+="+";
+            }
+        }
+        contenido2+="M ";
+    }else{
+       // contenido2+="</td> </tr> </tbody> </table> </br></br>";
+    }
+    if(Bi[nr]!=0 || M[NVF]==0 ){
+        contenido2+=s+Bi[nr]+"</td> </tr> </tbody> </table> </br></br>";
+    }
+
+        
+}while(!valid);
+
+    for(var i=0;i<nv1;i++){
+        valid=true;
+        for(var j=0;j<pos.length;j++){
+            if(pos[j]==i+1){
+                alert(pos[j]+"y tambien "+Bi[j]);
+                contenido2+=" <h4>X<sub>"+Number(i+1)+"</sub>="+Bi[j]+"</h4> <br> ";
+                valid=false;
+            }
+        }
+        if(valid){
+            contenido2+=" <h4>X<sub>"+Number(i+1)+"</sub>=0</h4> <br> ";
+        }
+        if(i+1==nv1){
+            contenido2+="<h4>Z="+Bi[nr]+"</h4> <br> ";
+        }
+    }
+    var plano3 = document.getElementById("Stabla3");
+    plano3.innerHTML=contenido2;
 
 }
