@@ -295,14 +295,6 @@ function northwest_corner()
 	  }
 	  
 	  var datastring = "values="+values+"&supply="+supply+"&demand="+demand+"&nrw="+nrw+"&ncn="+ncn;
-	  var pathurl = "vogel-approximation.php"; 
-	  $.ajax({
-		  type:"POST",
-		  url:pathurl,
-		  data:datastring,
-		  success:function(html){
-		  $('#result').html(html);
-		  }
-	       });
-	}
+	  alert (datastring);
+}
 }
