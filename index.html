@@ -22,6 +22,7 @@ http://www.tooplate.com/view/2109-the-card
   <script src="js/Simplex.js"></script>
   <script src="js/Asignacion.js"></script>
   <script src="js/Penalidad.js"></script>
+  <script src="js/Asig.js"></script>
   <!-- Templatemo style -->
 
 </head>
@@ -82,7 +83,7 @@ http://www.tooplate.com/view/2109-the-card
               
             <!-- Section 1 Metodo Simplex -->
             <section class="tm-section tm-section-1 mx-auto">
-              <div class="tm-textbox tm-textbox-2 tm-bg-dark">
+              <div style="width: fit-content;" class="tm-textbox tm-textbox-2 tm-bg-dark">
                 <center>
                 <h2 class="tm-text-blue mb-4">METODO SIMPLEX</h2>
                 </center>
@@ -113,7 +114,7 @@ http://www.tooplate.com/view/2109-the-card
             </section>
             <!-- Section 2 Metodo Transporte  -->
             <section class="tm-section tm-section-2 mx-auto">
-                <div class="tm-textbox tm-textbox-2 tm-bg-dark">
+                <div style="width: fit-content;" class="tm-textbox tm-textbox-2 tm-bg-dark">
               <div class="ec_calculator_gen clearfix">
                 <center>
                 <h2 class="tm-text-blue mb-4"> PENALIDAD</h2>
@@ -126,22 +127,27 @@ http://www.tooplate.com/view/2109-the-card
                   <div id="dispCalcConts" style="opacity: 1;"><div class="group clearfix">
               <div class="group_con_45 clearfix">
               <label>NUMERO DE FILAS  </label>
-              <input type="text" id="nrw" class="easypositive-integer">
+             <!-- <input type="text" id="nrw" class="easypositive-integer"> -->
+             <input type="number" id="n1" class="easypositive-integer">
               </div>
               <br>
               <div class="group_con_45 clearfix">
               <label>NUMERO DE COLUMNAS  </label>
-              <input type="text" id="ncn" class="easypositive-integer">
+              <!--<input type="text" id="ncn" class="easypositive-integer">-->
+              <input type="number" id="n2" class="easypositive-integer">
               </div>
               </div>
               <br>
               <div class="group clearfix">
-              <input type="button" value="CREAR" onclick="matrix_form(); "class="btn btn-info" style="visibility: visible; width: 70%;">
-              <input type="reset" value="REINICIAR" onclick="clear_all()" class="btn btn-success" style="visibility: visible; width: 25%;"><div class="errClass" id="dynErrDisp" style="display: none;"></div><div id="calciScroll"></div>
+             <!-- <input type="button" value="CREAR" onclick="matrix_form(); "class="btn btn-info" style="visibility: visible; width: 70%;">-->
+             <input type="button" value="CREAR" onclick="Agen('2','n2','n1','result',['Origen','A'],['Destino',1]);" class="btn btn-info" style="visibility: visible; width: 70%;">
+
+             <input type="reset" value="REINICIAR" onclick="clear_all()" class="btn btn-success" style="visibility: visible; width: 25%;"><div class="errClass" id="dynErrDisp" style="display: none;"></div><div id="calciScroll"></div>
               </div>
               <div id="frtab" class="table"></div>
               <div class="result">
                   <div id="result" class="table"></div>
+                  
                </div>
                   </div>	</form>
                    </div>
@@ -150,12 +156,14 @@ http://www.tooplate.com/view/2109-the-card
             
             <!-- Section 3 Asignacion -->
             <section class="tm-section tm-section-3 mx-auto">
-              <div class="tm-textbox tm-textbox-2 tm-bg-dark">
+              <div style="width: fit-content;" class="tm-textbox tm-textbox-2 tm-bg-dark">
                 <h2 class="tm-text-blue mb-4">METODO DE ASIGNACION</h2>
                 
                 <td class="td-actions text-right">
-                  Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="tabls_creation();" class="easypositive">
-                  <div id="matrix1" class="table"></div>
+                 Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="tabls_creation();" class="easypositive">
+                <!-- Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="Agen('1','input','0','matrix1',['VS','A'],['YS',1]);" class="easypositive">-->
+
+                 <div id="matrix1" class="table"></div>
                   <br>
                   <input type="button" value="Calcular" onclick="tqe_perc()" class="btn btn-info" style="width: 70%;">
                   <input type="reset" onclick="clearall()" value="Reajustar" class="btn btn-success" style="width: 20%;">
