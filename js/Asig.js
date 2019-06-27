@@ -169,9 +169,127 @@ function Pgen(nf,nc){
 
     /* alert(sof);
      alert(sdem);*/
+     var dat=[];
+     var det = [0,0];
+     //------------------------------SE COMPRUEBA SI ESTA BALANCEADA
      if(sof==sdem){
-        Agen('2',nx,ny,'result2',['Destino',1],['Origen','A']);
+       // Agen('2',nx,ny,'result2',['Destino',1],['Origen','A']);
+        for(var i=0;i<ny;i++){
+            dat.push(new Array(nx+1));
+            if(i==ny-1){
+                dat.push(new Array(nx));
+            }
+        }
+        
+     }else{
+         if(sof<sdem){
+             ny++;
+             det=[1,Number(sdem-sof)];
+         }else{
+             nx++;
+             det=[2,Number(sof-sdem)];
+         }
+
+         for(var i=0;i<ny;i++){
+            dat.push(new Array(nx+1));
+            if(i==ny-1){
+                dat.push(new Array(nx));
+            }
+        }
+
      }
+     //-------------- fIN DE COMPROBACION
+
+     //--------------LLenado de DAtos
+      
+
+    // alert(det[1]);
+    //----------------------------------BALANCEO
+     for(var i=0;i<ny;i++){
+
+        for(var j=0;j<nx;j++){    
+            if(i==ny-1 && det[0]==1){
+                dat[i][j]=0;
+                dat[i+1][j]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+1)).value);
+                //dat[i+2][j]=0;
+                if(j==nx-1){
+                    dat[i][j+1]=det[1];
+                }
+                
+
+            }else{
+                if(j==nx-1 && det[0]==2){
+                    dat[i][j]=0;
+                    //alert("p"+Number(j+2)+"*"+Number(i+1));
+                    dat[i][j+1]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+1)).value);
+                    //dat[i][j+2]=0;
+                    if(i==ny-1){
+                        dat[i+1][j]=det[1];
+                    }
+                    
+                }else{
+                    dat[i][j]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+1)).value);
+                    if(j==nx-1){
+                        dat[i][j+1]=Number(document.getElementById("p"+Number(j+2)+"*"+Number(i+1)).value);
+                        
+                    }
+                    if(i==ny-1){
+                        dat[i+1][j]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+2)).value);
+                        
+                    }
+                }
+            
+            }   
+              
+           //alert(i+","+j); 
+        }
+
+     }
+     //-----------------------penalidad
+    dat.push(new Array(nx));
+    for(var i=0;i<ny;i++){
+        dat[i].push(0);
+        
+    }
+    for(var j=0;j<nx;j++){
+            dat[ny+1][j]=0;
+
+    }
+    //--------------------penalidad
+     console.log(dat);
+    //--------------mostrando tabla;
+    var pcon = " ";
+    pcon += "<table style='background: none;' class='table'><thead> <tr> ";
+    pcon +="<th class='text-center mx-auto'>Origen/ Destino </th>";
+    var abc = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',];
+    
+    for(var i=0;i<dat[0].length-2;i++){
+        pcon+="<th class='text-center mx-auto'>"+Number(i+1)+"</th>";
+    }
+    pcon+="<th class='text-center mx-auto'>OFERTA</th> <th class='text-center mx-auto'>Penalidad </th></tr> </thead> <tbody>";
+
+    for(var i=0;i<dat.length;i++){
+        if(i==dat.length-2){
+            pcon+="<tr><td class='text-center mx-auto'>Penalidad</td>";
+        }else if(i==dat.length-1){
+            pcon+="<tr><td class='text-center mx-auto'>Demanda</td>";
+        }else{
+            pcon+="<tr><td class='text-center mx-auto'>"+abc[i]+"</td>";
+        }    
+        for(var j=0;j<dat[i].length;j++){
+
+            pcon+="<td class='text-center mx-auto'>"+dat[i][j]+"</td>"
+            //console.log(dat[i][j]);
+
+        }
+        pcon+="</tr>";
+
+    }
+    pcon+="</tbody> </table> </br>";
+
+    document.getElementById("result2").innerHTML=pcon;
+
+
 
 
 }
