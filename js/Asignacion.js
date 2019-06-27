@@ -96,7 +96,8 @@ function tabls_creation()
            alert("Ingrese valor entre 1 a 12");
             }
            else if(count!=0)
-	   {	
+	   {
+       // Declaramos las variables y creamos el header, footer y caption.	
 	  var oTable = document.createElement("TABLE");
 	  var oTHead = document.createElement("THEAD");
 	  var oTBody = document.createElement("TBODY");
@@ -109,7 +110,8 @@ function tabls_creation()
          for(var i=1;i<=count;i++)
           {
 	  heading[i] = ""+i;
-	  }
+    }
+    // Inserta los elementos creados en la tabla.
 	  oTable.appendChild(oTHead);
 	  oTable.appendChild(oTBody);
 	  oTable.setAttribute("class","bg4");
@@ -155,22 +157,22 @@ function tabls_creation()
 
  function hungarianAlgortithm(squad,formation) {
    init(formation, squad);
-
+  //Paso 1
    matrix = subtractRowMins(matrix);
-
+  //Paso 2
    findZeros(matrix);
    var done = false;
    while (!done) {
-   
+  //Paso 3
      var covCols = coverColumns(matrix);
      if (covCols > solutions -1) {
        done = true;
      }
      if (!done) {
-   
+      //Paso 4 (llama al Paso 5)
        done = coverZeros(matrix);
        while (done) {
-     
+        //Paso 6
          var smallest = findSmallestUncoveredVal(matrix);
          matrix = uncoverSmallest(smallest, matrix);
          done = coverZeros(matrix);
@@ -317,7 +319,7 @@ function tabls_creation()
        rCov[zero.row] = 1;
        cCov[starCol] = 0;
      } else {
-       starZeroInRow(zero);
+       starZeroInRow(zero);//Paso 5
        retVal = false;
      }
      if (retVal == true) {
