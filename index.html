@@ -127,19 +127,19 @@ http://www.tooplate.com/view/2109-the-card
                   <div id="dispCalcConts" style="opacity: 1;"><div class="group clearfix">
               <div class="group_con_45 clearfix">
               <label>NUMERO DE FILAS  </label>
-             <!-- <input type="text" id="nrw" class="easypositive-integer"> -->
+           
              <input type="number" onchange="comp01(0,['n1','n2'],'result');" id="n1" class="easypositive-integer">
               </div>
               <br>
               <div class="group_con_45 clearfix">
               <label>NUMERO DE COLUMNAS  </label>
-              <!--<input type="text" id="ncn" class="easypositive-integer">-->
+              
               <input type="number" onchange="comp01(0,['n1','n2'],'result');" id="n2" class="easypositive-integer">
               </div>
               </div>
               <br>
               <div class="group clearfix">
-             <!-- <input type="button" value="CREAR" onclick="matrix_form(); "class="btn btn-info" style="visibility: visible; width: 70%;">-->
+             
              <input type="button" value="Resolver" onclick="Pgen('n1','n2');" class="btn btn-info" style="visibility: visible; width: 70%;">
 
              <input type="reset" value="REINICIAR" onclick="clear_all()" class="btn btn-success" style="visibility: visible; width: 25%;"><div class="errClass" id="dynErrDisp" style="display: none;"></div><div id="calciScroll"></div>
@@ -160,7 +160,7 @@ http://www.tooplate.com/view/2109-the-card
                 <h2 class="tm-text-blue mb-4">METODO DE ASIGNACION</h2>
                 
                 <td class="td-actions text-right">
-                 Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="tabls_creation();" class="easypositive">
+                 Escriba el tamaño de la matriz: <input type="tel" id="input" onkeyup="tabls_creation();" class="easypositive">
                 <!-- Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="Agen('1','input','0','matrix1',['VS','A'],['YS',1]);" class="easypositive">-->
 
                  <div id="matrix1" class="table"></div>

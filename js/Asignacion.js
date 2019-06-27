@@ -1,16 +1,14 @@
-/* Arreglo de dos dimensiones*/
+/* Arreglos bidimensionales */
  var skillMatrix=null;
  var matrix=null;
- //var stars=null;
- /* Arreglos */
+ /* Arreglos normales */
  var rCov=[];
  var cCov=[];
  var rows=0;
  var cols=0;
  var dim=0;
- var solutions=0; // "k"
-//var formation=[];
-//var squad=[];
+ var solutions=0; 
+
  FORBIDDEN_VALUE: -999999;
 
  
@@ -44,32 +42,32 @@ function tqe_perc()
 	}
 	  else
 	   {
-	       count=parseFloat(count);//alert(count);
+	       count=parseFloat(count);
 		for(i=0;i<count;i++)
 		{
 		    v[i]=[];
 		 for(j=0;j<count;j++)
 		     {
 		          id="#i"+i+j;
-		          p=parseFloat($(id).val());//alert(i+"+"+j);
+		          p=parseFloat($(id).val());
                           if (isNaN(p))
                           {
                               return false;
                           }
                           else
                           {
-		              v[i][j]=(p);//var test=i+""+j;       
+		              v[i][j]=(p);     
                           }
 		     }
 		}
 	   }
 	for(var i=0;i<count;i++)
 	{
-	formation[i]="M"+(i+1);
+	formation[i]=""+(i+1);
 	}
 	 for(var i=0;i<count;i++)
 	{
-	squad[i]="J"+(i+1);
+	squad[i]=""+(i+1);
 	}
 	matrix=v;
 	var result=hungarianAlgortithm(formation,squad);
@@ -99,28 +97,25 @@ function tabls_creation()
             }
            else if(count!=0)
 	   {	
-	  
 	  var oTable = document.createElement("TABLE");
 	  var oTHead = document.createElement("THEAD");
 	  var oTBody = document.createElement("TBODY");
 	  var oRow, oCell;
 	  var i, j;
 		
-	  
 	  var heading = new Array();
 			
-	  heading[0] = "Empleos/Hombre";
+	  heading[0] = "Origen/Destino";
          for(var i=1;i<=count;i++)
           {
-	  heading[i] = "J"+i;
+	  heading[i] = ""+i;
 	  }
-	  
 	  oTable.appendChild(oTHead);
 	  oTable.appendChild(oTBody);
 	  oTable.setAttribute("class","bg4");
 	  oTable.setAttribute("align","center");
 
-	  
+	
 	  oRow = document.createElement("TR");
 	  oTHead.appendChild(oRow);
 
@@ -134,14 +129,14 @@ function tabls_creation()
 
   	  var idval;
 	  var vali;
-	  
+
 	  for (i=0; i<count; i++)
 	  {
 	    oRow = document.createElement("TR");
 	    oRow.setAttribute("align","center");
 	    oTBody.appendChild(oRow);
             oCell = document.createElement("TD");
-	    oCell.innerHTML = "M"+(i+1);
+	    oCell.innerHTML = ""+(i+1);
 	    oRow.appendChild(oCell);
 	    for (j=0;j<heading.length-1; j++)
 	    {
@@ -160,22 +155,22 @@ function tabls_creation()
 
  function hungarianAlgortithm(squad,formation) {
    init(formation, squad);
-   // Paso 1
+
    matrix = subtractRowMins(matrix);
-   // Paso 2
+
    findZeros(matrix);
    var done = false;
    while (!done) {
-     // Paso 3
+   
      var covCols = coverColumns(matrix);
      if (covCols > solutions -1) {
        done = true;
      }
      if (!done) {
-    // Paso 4 (llama paso 5)
+   
        done = coverZeros(matrix);
        while (done) {
-         // Step 6
+     
          var smallest = findSmallestUncoveredVal(matrix);
          matrix = uncoverSmallest(smallest, matrix);
          done = coverZeros(matrix);
@@ -198,7 +193,7 @@ function tabls_creation()
  
    rCov = new Array(dim);
    cCov = new Array(dim);
-   initArray(cCov, 0); // Zero it out
+   initArray(cCov, 0); 
    initArray(rCov, 0);
  }
  
@@ -211,12 +206,11 @@ function tabls_creation()
    return matrix;
  }
  
- 
+
  function loadMatrix(squad, formation, matrix, reverse) {
-   matrix =v;//loadYourMatrix(squad, formation, matrix); // I've removed my implementation here. Far too much stuff
+   matrix =v;
    if (reverse) {
-  
-//     matrix = reverseMatrix(findMaxValue(matrix), matrix);
+
      matrix = (findMaxValue(matrix), matrix);   
    }
    return matrix;
@@ -285,7 +279,7 @@ function tabls_creation()
        }
      }
    }
-   
+   // Clear Covers
    initArray(cCov,0);
    initArray(rCov,0);
  }
@@ -317,13 +311,13 @@ function tabls_creation()
   var zero = findUncoveredZero(matrix); 
    
    while (zero.row > -1 && retVal == true) {
-     stars[zero.row][zero.col] = 2 //Prime it
+     stars[zero.row][zero.col] = 2 
      var starCol = foundStarInRow(zero.row, matrix);
      if (starCol > -1) {
        rCov[zero.row] = 1;
        cCov[starCol] = 0;
      } else {
-       starZeroInRow(zero); // Step 5
+       starZeroInRow(zero);
        retVal = false;
      }
      if (retVal == true) {
@@ -361,8 +355,7 @@ function tabls_creation()
  }
  
   
- function starZeroInRow(zero) { // Takes a Coords Object
-  // log("Step 5: Uncovered Zero:" + zero.row + "," + zero.col, DEBUG );
+ function starZeroInRow(zero) { 
    var done = false;
    var count = 0;
    var path = initMatrix(dim*2, 2);
@@ -388,7 +381,7 @@ function tabls_creation()
    }
    convertPath(path, count);
  
-   
+
    initArray(cCov,0);
    initArray(rCov,0);
    erasePrimes();
@@ -418,7 +411,7 @@ function tabls_creation()
  
   
  function convertPath(path, count) {
-   //logMatrix(path, "Step 5: Converting Path.  Count = " + count);
+   
    for (var i=0; i < count+1; i++) {
      var x = path[i][0];
      var y = path[i][1];
@@ -456,8 +449,6 @@ function tabls_creation()
  
   
  function uncoverSmallest(smallest, matrix) {
-   //log("Uncover Smallest: "+ smallest);
-       //logMatrix(matrix, "B4 Smallest uncovered");
  
    for (var i = 0; i < matrix.length; i++) {
      for (var j = 0; j < matrix[i].length; j++) {
@@ -469,14 +460,14 @@ function tabls_creation()
        }
      }
    }
-   //logMatrix(matrix, "Smallest uncovered");
+
    return matrix;
  }
  
  function getSolution(formation, squad) {
    var total = 0;
    var lineup = '';
-    // Changed from length of stars, since we must ignore some rows due to padding.
+    
    for (var i = 0; i < rows; i++) {
      for (var j = 0; j < cols; j++) {
        if (stars[i][j] == 1) {
@@ -494,5 +485,5 @@ return formation[i]+" = "+squad[j];
 }
 function HgCoords() {
  row = -1;
- col = -1;
+ col = -1;5
 }
