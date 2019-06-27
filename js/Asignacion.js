@@ -34,6 +34,7 @@ function checnum(as)
 
 function tqe_perc()
 {
+  var abcd = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',]
           $("#output").val("");
 	count=$("#input").val();
 	if(count=="")
@@ -63,11 +64,11 @@ function tqe_perc()
 	   }
 	for(var i=0;i<count;i++)
 	{
-	formation[i]=""+(i+1);
+	formation[i]=(i+1);
 	}
 	 for(var i=0;i<count;i++)
 	{
-	squad[i]=""+(i+1);
+	squad.push(abcd[i]);
 	}
 	matrix=v;
 	var result=hungarianAlgortithm(formation,squad);
@@ -105,11 +106,11 @@ function tabls_creation()
 	  var i, j;
 		
 	  var heading = new Array();
-			
+		var abc = ['A','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',]	
 	  heading[0] = "Origen/Destino";
          for(var i=1;i<=count;i++)
           {
-	  heading[i] = ""+i;
+	  heading.push(abc[i]);
     }
     // Inserta los elementos creados en la tabla.
 	  oTable.appendChild(oTHead);
@@ -138,7 +139,7 @@ function tabls_creation()
 	    oRow.setAttribute("align","center");
 	    oTBody.appendChild(oRow);
             oCell = document.createElement("TD");
-	    oCell.innerHTML = ""+(i+1);
+	    oCell.innerHTML = (i+1);
 	    oRow.appendChild(oCell);
 	    for (j=0;j<heading.length-1; j++)
 	    {
