@@ -397,6 +397,11 @@ var pos=[];
    // console.log(temporal);
     
 do{
+    //aca en el inicio podes ir agregando como las intrsucciones o mejor solo ponele paso 1 paso 2 etc como no sabes 
+    //cuantos pasos seran podes crear un contador que empieze en 1 y a medida se repita el do while vaya aumentado y para
+    //irlo mostrando aca al incio podes crear un contenido2 = " "; contenido2+= "<h3><u>PASO "+varde_contador+"</u></h3> <br>";
+    // y asi 
+    //-------------------------------------------------------------------------DESDE ACA COMIENZAN LAS ITERACIONES
    //--------------------------------------------------------VARIABLE DE ENTRADA  
     ve=0;
     nve=Number(Z[0])+(Number(M[0])*99999);
@@ -578,11 +583,15 @@ do{
     }
     if(Bi[nr]!=0 || M[NVF]==0 ){
         contenido2+=s+Bi[nr]+"</td> </tr> </tbody> </table> </br></br>";
+        //TODO DONDE SALGA CONTENIDO2 ES LO QUE SE AGREGARA A La pagina
     }
 
-        
+   //----------------------------------TODO LO DE ESTE WHILE SON LAS INTERACIONES QUE  SE HACEN para la solucion     
 }while(!valid);
-
+//aca een este lugar deberias agregar algo tipo var modalS = document.getelementbyid("modalid");
+//y luego agregar modalS.innerHTML = contenido2; 
+//y para que no interfiera con el resultado de abajo luego de eso pondras contenido2= " "
+//debe hacerse que contenido2 se agrege al modal y no al plano3 como se ve al final se metan en el modal cada uno.
     for(var i=0;i<nv1;i++){
         valid=true;
         for(var j=0;j<pos.length;j++){
