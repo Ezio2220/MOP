@@ -1,8 +1,8 @@
-/* 2 dimension arrays */
+/* Arreglo de dos dimensiones*/
  var skillMatrix=null;
  var matrix=null;
  //var stars=null;
- /* Single arrays */
+ /* Arreglos */
  var rCov=[];
  var cCov=[];
  var rows=0;
@@ -99,14 +99,14 @@ function tabls_creation()
             }
            else if(count!=0)
 	   {	
-	  // Declare variables and create the header, footer, and caption.
+	  
 	  var oTable = document.createElement("TABLE");
 	  var oTHead = document.createElement("THEAD");
 	  var oTBody = document.createElement("TBODY");
 	  var oRow, oCell;
 	  var i, j;
 		
-	  // Declare stock data that would normally be read in from a stock Web site.
+	  
 	  var heading = new Array();
 			
 	  heading[0] = "Empleos/Hombre";
@@ -114,17 +114,17 @@ function tabls_creation()
           {
 	  heading[i] = "J"+i;
 	  }
-	  // Insert the created elements into oTable.
+	  
 	  oTable.appendChild(oTHead);
 	  oTable.appendChild(oTBody);
 	  oTable.setAttribute("class","bg4");
 	  oTable.setAttribute("align","center");
 
-	  // Insert a row into the header and set its background color.
+	  
 	  oRow = document.createElement("TR");
 	  oTHead.appendChild(oRow);
 
-	  // Create and insert cells into the header row.
+	  
 	  for (a=0; a<heading.length; a++)
 	  {
 	    oCell = document.createElement("TH");
@@ -134,7 +134,7 @@ function tabls_creation()
 
   	  var idval;
 	  var vali;
-	  // Insert rows and cells into bodies.
+	  
 	  for (i=0; i<count; i++)
 	  {
 	    oRow = document.createElement("TR");
@@ -151,7 +151,7 @@ function tabls_creation()
 	    }
 	  }
   
-	// Insert the table into the document tree.
+	
 	var frtb = document.getElementById("matrix1");
 	frtb.appendChild(oTable);
      }
@@ -160,19 +160,19 @@ function tabls_creation()
 
  function hungarianAlgortithm(squad,formation) {
    init(formation, squad);
-   // Step 1
+   // Paso 1
    matrix = subtractRowMins(matrix);
-   // Step 2
+   // Paso 2
    findZeros(matrix);
    var done = false;
    while (!done) {
-     // Step 3
+     // Paso 3
      var covCols = coverColumns(matrix);
      if (covCols > solutions -1) {
        done = true;
      }
      if (!done) {
-    // Step 4 (calls Step 5)
+    // Paso 4 (llama paso 5)
        done = coverZeros(matrix);
        while (done) {
          // Step 6
@@ -211,12 +211,11 @@ function tabls_creation()
    return matrix;
  }
  
- // Takes an array of positions as a formation.
- // Takes a squad which contains an array of players
+ 
  function loadMatrix(squad, formation, matrix, reverse) {
    matrix =v;//loadYourMatrix(squad, formation, matrix); // I've removed my implementation here. Far too much stuff
    if (reverse) {
-   // This reverses the matrix.  We need to to create a cost based solution.
+  
 //     matrix = reverseMatrix(findMaxValue(matrix), matrix);
      matrix = (findMaxValue(matrix), matrix);   
    }
@@ -286,7 +285,7 @@ function tabls_creation()
        }
      }
    }
-   // Clear Covers
+   
    initArray(cCov,0);
    initArray(rCov,0);
  }
@@ -315,7 +314,7 @@ function tabls_creation()
  
  function coverZeros(matrix) {
    var retVal = true;
-  var zero = findUncoveredZero(matrix); // Returns a Coords object..
+  var zero = findUncoveredZero(matrix); 
    
    while (zero.row > -1 && retVal == true) {
      stars[zero.row][zero.col] = 2 //Prime it
@@ -389,7 +388,7 @@ function tabls_creation()
    }
    convertPath(path, count);
  
-   // Clear Covers
+   
    initArray(cCov,0);
    initArray(rCov,0);
    erasePrimes();
