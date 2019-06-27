@@ -608,7 +608,10 @@ do{
             contenido2+="<h4>Z="+Bi[nr]+"</h4> <br> ";
         }
     }
-    var plano3 = document.getElementById("Stabla3");
-    plano3.innerHTML=contenido2;
+    /*var plano3 = document.getElementById("Stabla3");
+    plano3.innerHTML=contenido2;*/
+    var modalS = document.getElementById("pasosS")
+    modalS.innerHTML = contenido2;
+    contenido2="";
 
 }
