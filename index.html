@@ -75,7 +75,7 @@ http://www.tooplate.com/view/2109-the-card
             <section class="tm-section tm-section-0">
               <h2 class="tm-section-title mb-3 font-weight-bold">Metodos De Optimizacion</h2>
               <div class="tm-textbox tm-bg-dark">
-                <p>El presente proyecto muestra los dos metodos en los cuales hemos trabajo.</p>
+                <p>El presente proyecto muestra los tres metodos en los cuales hemos trabajo.</p>
                 <p class="mb-0">METODO SIMPLEX , PENALIDAD y METODO DE ASIGNACION.</p>
               </div>
               
@@ -110,6 +110,53 @@ http://www.tooplate.com/view/2109-the-card
               <div id="Stabla3">
 
               </div>
+               <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLong" style="color:black;">
+  <b>PROCEDIMIENTO</b>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">PROCEDIMIENTO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div id="pasosS">
+      <center>
+      <p style="background-color: red;">
+        PASO 1: MODELACIÓN MEDIANTE PROGRAMACIÓN LINEAL
+        </p>
+        </center>
+          <br><br>
+          <center>
+            <p style="background-color: red;">
+        PASO 2: CONVERTIR LAS INECUACIONES EN ECUACIONES
+        </p>    
+        </center>
+        <br><br>
+        <center>
+        <p style="background-color: red;">
+        PASO 3: DEFINIR LA SOLUCIÓN BÁSICA INICIAL
+        </p>
+        </center>
+        <br><br>
+        <center>
+          <p style="background-color: red;">
+        PASO 4: DEFINIR LA TABLA SIMPLEX INICIAL
+        </p>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>  
                   </center>
             </section>
             <!-- Section 2 Metodo Transporte  -->
@@ -127,19 +174,19 @@ http://www.tooplate.com/view/2109-the-card
                   <div id="dispCalcConts" style="opacity: 1;"><div class="group clearfix">
               <div class="group_con_45 clearfix">
               <label>NUMERO DE FILAS  </label>
-             <!-- <input type="text" id="nrw" class="easypositive-integer"> -->
+           
              <input type="number" onchange="comp01(0,['n1','n2'],'result');" id="n1" class="easypositive-integer">
               </div>
               <br>
               <div class="group_con_45 clearfix">
               <label>NUMERO DE COLUMNAS  </label>
-              <!--<input type="text" id="ncn" class="easypositive-integer">-->
+              
               <input type="number" onchange="comp01(0,['n1','n2'],'result');" id="n2" class="easypositive-integer">
               </div>
               </div>
               <br>
               <div class="group clearfix">
-             <!-- <input type="button" value="CREAR" onclick="matrix_form(); "class="btn btn-info" style="visibility: visible; width: 70%;">-->
+             
              <input type="button" value="Resolver" onclick="Pgen('n1','n2');" class="btn btn-info" style="visibility: visible; width: 70%;">
 
              <input type="reset" value="REINICIAR" onclick="clear_all()" class="btn btn-success" style="visibility: visible; width: 25%;"><div class="errClass" id="dynErrDisp" style="display: none;"></div><div id="calciScroll"></div>
@@ -151,6 +198,53 @@ http://www.tooplate.com/view/2109-the-card
                </div>
                   </div>	</form>
                    </div>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLong" style="color:black;">
+  <b>PROCEDIMIENTO</b>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">PROCEDIMIENTO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div id="pasosS">
+      <center>
+      <p style="background-color: red;">
+        PASO 1: 
+        </p>
+        </center>
+          <br><br>
+          <center>
+            <p style="background-color: red;">
+        PASO 2: 
+        </p>    
+        </center>
+        <br><br>
+        <center>
+        <p style="background-color: red;">
+        PASO 3: 
+        </p>
+        </center>
+        <br><br>
+        <center>
+          <p style="background-color: red;">
+        PASO 4: 
+        </p>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>  
                 </div>
             </section>
             
@@ -160,7 +254,7 @@ http://www.tooplate.com/view/2109-the-card
                 <h2 class="tm-text-blue mb-4">METODO DE ASIGNACION</h2>
                 
                 <td class="td-actions text-right">
-                 Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="tabls_creation();" class="easypositive">
+                 Escriba el tamaño de la matriz: <input type="tel" id="input" onkeyup="tabls_creation();" class="easypositive">
                 <!-- Escriba el numero de Columnas: <input type="tel" id="input" onkeyup="Agen('1','input','0','matrix1',['VS','A'],['YS',1]);" class="easypositive">-->
 
                  <div id="matrix1" class="table"></div>
@@ -179,6 +273,8 @@ http://www.tooplate.com/view/2109-the-card
             </section>
 
   <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/tether.min.js" ></script>
+<script src="js/bootstrap.min.js" ></script>
   <script src="js/background.cycle.js"></script>
   <script src="slick/slick.min.js"></script>
   <script src="js/jquery.magnific-popup.min.js"></script>
@@ -203,19 +299,19 @@ http://www.tooplate.com/view/2109-the-card
         pageAlign = $(e.target).data("align");
       }
 
-      // Change bg image
+   
       previousImageId = currentImageId;
       currentImageId = $(e.target).data("linkid");
       bgCycle.cycleToNextImage(previousImageId, currentImageId);
 
-      // Change menu item highlight
+     
       $(`.tm-nav-item:eq(${previousImageId})`).removeClass('active');
       $(`.tm-nav-item:eq(${currentImageId})`).addClass('active');
 
-      // Change page content
+     
       $(`.tm-section-${previousImageId}`).fadeOut(function (e) {
         $(`.tm-section-${currentImageId}`).fadeIn();
-        // Gallery
+      
         if (currentImageId === 2) {
           setupSlider();
         }
@@ -226,12 +322,10 @@ http://www.tooplate.com/view/2109-the-card
 
     $(document).ready(function () {
 
-      // Set first page
       $('.tm-section').fadeOut(0);
       $('.tm-section-0').fadeIn();
 
-      // Set Background images
-      // https://www.jqueryscript.net/slideshow/Simple-jQuery-Background-Image-Slideshow-with-Fade-Transitions-Background-Cycle.html
+      
       bgCycle = $("body").backgroundCycle({
         imageUrls: [
           'img/alan.gif',
@@ -247,14 +341,14 @@ http://www.tooplate.com/view/2109-the-card
       eachNavLink = $('.tm-nav-link');
       links = $('.tm-nav-links');
 
-      // "Menu" open/close
+      
       if (links.hasClass('open')) {
         links.fadeIn(0);
       } else {
         links.fadeOut(0);
       }
 
-      // Each menu item click
+      
       eachNavLink.on('click', navLinkClick);
 
       $('.tm-navbar-menu').click(function (e) {
@@ -268,22 +362,20 @@ http://www.tooplate.com/view/2109-the-card
         links.toggleClass('open');
       });
 
-      // window resize
+ 
       $(window).resize(function () {
 
-        // If current page is Gallery page, set it up
+        
         if (currentImageId === 2) {
           setupSlider();
         }
 
-        // Adjust footer
         adjustFooter();
       });
 
       adjustFooter();
 
-    }); // DOM is ready
-
+    });
     function adjustFooter() {
       const windowHeight = $(window).height();
       const topHeight = $('.tm-top-container').height();
@@ -336,7 +428,7 @@ http://www.tooplate.com/view/2109-the-card
         slidesToScroll: slidesToScroll
       });
 
-      // Open big image when a gallery image is clicked.
+      
       $('.slick-list').magnificPopup({
         delegate: 'a',
         type: 'image',
