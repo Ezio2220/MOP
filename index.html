@@ -175,19 +175,19 @@ http://www.tooplate.com/view/2109-the-card
               <div class="group_con_45 clearfix">
               <label>NUMERO DE FILAS  </label>
            
-             <input type="number" onchange="comp01(0,['n1','n2'],'result');" id="n1" class="easypositive-integer">
+             <input type="number" onchange="comp01(1,['n1','n2'],'result');" id="n1" class="easypositive-integer">
               </div>
               <br>
               <div class="group_con_45 clearfix">
               <label>NUMERO DE COLUMNAS  </label>
               
-              <input type="number" onchange="comp01(0,['n1','n2'],'result');" id="n2" class="easypositive-integer">
+              <input type="number" onchange="comp01(1,['n1','n2'],'result');" id="n2" class="easypositive-integer">
               </div>
               </div>
               <br>
               <div class="group clearfix">
              
-             <input type="button" value="Resolver" onclick="Pgen('n1','n2');" class="btn btn-info" style="visibility: visible; width: 70%;">
+             <input id="Pres" type="button" value="Resolver" onclick="Pgen('n1','n2');" class="btn btn-info" style="visibility: visible; width: 70%;">
 
              <input type="reset" value="REINICIAR" onclick="clear_all()" class="btn btn-success" style="visibility: visible; width: 25%;"><div class="errClass" id="dynErrDisp" style="display: none;"></div><div id="calciScroll"></div>
               </div>
