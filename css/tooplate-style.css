@@ -16,6 +16,20 @@ body {
   background: #25332e;
 }
 
+.modal-content{
+
+  margin:0 auto;
+  display:table;
+  position: absolute;
+  left: -150%;
+  right:0;
+  top: -20%; 
+  border:1px solid;
+  color:black;
+
+}
+
+
 a {
   transition: all 0.2s;
 }
