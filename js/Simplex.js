@@ -588,10 +588,14 @@ do{
 
    //----------------------------------TODO LO DE ESTE WHILE SON LAS INTERACIONES QUE  SE HACEN para la solucion     
 }while(!valid);
+        var modalS = document.getElementById("pasosS")
+        modalS.innerHTML = contenido2; 
+        contenido2="";
 //aca een este lugar deberias agregar algo tipo var modalS = document.getelementbyid("modalid");
 //y luego agregar modalS.innerHTML = contenido2; 
 //y para que no interfiera con el resultado de abajo luego de eso pondras contenido2= " "
 //debe hacerse que contenido2 se agrege al modal y no al plano3 como se ve al final se metan en el modal cada uno.
+    
     for(var i=0;i<nv1;i++){
         valid=true;
         for(var j=0;j<pos.length;j++){
@@ -600,18 +604,19 @@ do{
                 contenido2+=" <h4>X<sub>"+Number(i+1)+"</sub>="+Bi[j]+"</h4> <br> ";
                 valid=false;
             }
-        }
+        };
+       
         if(valid){
             contenido2+=" <h4>X<sub>"+Number(i+1)+"</sub>=0</h4> <br> ";
         }
         if(i+1==nv1){
-            contenido2+="<h4>Z="+Bi[nr]+"</h4> <br> ";
-        }
+            contenido2+="<h4>Z="+Bi[nr]+"</h4> <br> ";      
+        }  
+    
     }
-    /*var plano3 = document.getElementById("Stabla3");
-    plano3.innerHTML=contenido2;*/
-    var modalS = document.getElementById("pasosS")
-    modalS.innerHTML = contenido2;
-    contenido2=" ";
+    var contenido3 = contenido2;
+    plano3 = document.getElementById("Stabla3");
+    plano3.innerHTML=contenido3;
 
 }
+    
