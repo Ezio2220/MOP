@@ -672,7 +672,17 @@ console.log(puntos);
 
     }
     pcon+="</tbody> </table> </br>";
-
+    pcon+="<h3> SOlucion </h3><br>";
+    var Zres=0;
+    console.log("RESPUESTA");
+    
+    for(var i=0;i<puntos.length;i++){
+        console.log(puntos[i][0]);
+        console.log(puntos[i][1]);
+        Zres+=Number(dat2[puntos[i][0]][puntos[i][1]]*dat[puntos[i][0]][puntos[i][1]]);
+        console.log(Number(dat2[puntos[i][0]][puntos[i][1]]*dat[puntos[i][0]][puntos[i][1]]));
+    }
+    pcon+="<h3> Z="+Zres+" </h3><br>"
     document.getElementById("result3").innerHTML+=pcon;
 
 
