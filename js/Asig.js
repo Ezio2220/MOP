@@ -170,14 +170,17 @@ function Pgen(nf,nc){
     /* alert(sof);
      alert(sdem);*/
      var dat=[];
+     var dat2=[];
      var det = [0,0];
      //------------------------------SE COMPRUEBA SI ESTA BALANCEADA
      if(sof==sdem){
        // Agen('2',nx,ny,'result2',['Destino',1],['Origen','A']);
         for(var i=0;i<ny;i++){
             dat.push(new Array(nx+1));
+            dat2.push(new Array(nx+1));
             if(i==ny-1){
                 dat.push(new Array(nx));
+                dat2.push(new Array(nx+1));
             }
         }
         
@@ -192,8 +195,10 @@ function Pgen(nf,nc){
 
          for(var i=0;i<ny;i++){
             dat.push(new Array(nx+1));
+            dat2.push(new Array(nx+1));
             if(i==ny-1){
                 dat.push(new Array(nx));
+                dat2.push(new Array(nx+1));
             }
         }
 
@@ -211,9 +216,12 @@ function Pgen(nf,nc){
             if(i==ny-1 && det[0]==1){
                 dat[i][j]=0;
                 dat[i+1][j]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+1)).value);
+                dat2[i][j]=0;
+                dat2[i+1][j]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+1)).value);
                 //dat[i+2][j]=0;
                 if(j==nx-1){
                     dat[i][j+1]=det[1];
+                    dat2[i][j+1]=det[1];
                 }
                 
 
@@ -222,20 +230,24 @@ function Pgen(nf,nc){
                     dat[i][j]=0;
                     //alert("p"+Number(j+2)+"*"+Number(i+1));
                     dat[i][j+1]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+1)).value);
+                    dat2[i][j]=0;
+                    dat2[i][j+1]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+1)).value);
                     //dat[i][j+2]=0;
                     if(i==ny-1){
                         dat[i+1][j]=det[1];
+                        dat2[i+1][j]=det[1];
                     }
                     
                 }else{
                     dat[i][j]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+1)).value);
+                    dat2[i][j]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+1)).value);
                     if(j==nx-1){
                         dat[i][j+1]=Number(document.getElementById("p"+Number(j+2)+"*"+Number(i+1)).value);
-                        
+                        dat2[i][j+1]=Number(document.getElementById("p"+Number(j+2)+"*"+Number(i+1)).value);
                     }
                     if(i==ny-1){
                         dat[i+1][j]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+2)).value);
-                        
+                        dat2[i+1][j]=Number(document.getElementById("p"+Number(j+1)+"*"+Number(i+2)).value);
                     }
                 }
             
@@ -288,7 +300,9 @@ function Pgen(nf,nc){
     
     //-------------------- fin de calculo de penalidad
      console.log(dat);
-    //--------------mostrando tabla;
+    //--------------mostrando tabla; 
+    
+
     var pcon = " ";
     pcon += "<table style='background: none;' class='table'><thead> <tr> ";
     pcon +="<th class='text-center mx-auto'>Origen/ Destino </th>";
@@ -308,7 +322,9 @@ function Pgen(nf,nc){
         }else{
             pcon+="<tr><td class='text-center mx-auto'>"+abc[i]+"</td>";
         }    
+        
         for(var j=0;j<dat[i].length;j++){
+            
 
             pcon+="<td class='text-center mx-auto'>"+dat[i][j]+"</td>"
             //console.log(dat[i][j]);
@@ -320,8 +336,10 @@ function Pgen(nf,nc){
     pcon+="</tbody> </table> </br>";
 
     document.getElementById("result2").innerHTML=pcon;
+    console.log("DEFINITAADASDADASDASDASDA");
+    console.log(dat2);
     var lolact=0;
-    //--------------------------------se obtiene la penalidad mayor ya sea de la oferta o de la demanda
+    //----------------------------------------se obtiene la penalidad mayor ya sea de la oferta o de la demanda
     var aux2 = [];
     aux2 = mayor(penof,pendem);
 
@@ -331,8 +349,9 @@ function Pgen(nf,nc){
     var loly = [];
     var puntos = [];
     //puntos[lolact] = new Array(2);
-
-    //------------------------- se opera
+   
+    
+    //------------------------- -------------------------------------------------------se opera y transforma
     if(aux2[0]=="O"){
         for(var i=0;i<ny;i++){
             if(dat[i][dat[i].length-1]==aux2[1]){
@@ -344,7 +363,7 @@ function Pgen(nf,nc){
                  console.log("oferta: "+dat[i][dat[i].length-2]+" DEMANDA: "+dat[dat.length-2][auxnum]);
                  tmp.length=0;
                  if(dat[i][dat[i].length-2]==dat[dat.length-2][auxnum]){
-                    dat[i][auxnum]=dat[dat.length-2][auxnum];
+                    dat2[i][auxnum]=dat[dat.length-2][auxnum];
 
                     dat[dat.length-2][auxnum]=0;
                     dat[i][dat[i].length-2]=0;
@@ -356,12 +375,12 @@ function Pgen(nf,nc){
                     dat[i][dat[i].length-2]= Number(dat[i][dat[i].length-2]-dat[dat.length-2][auxnum]);
                     dat[dat.length-2][auxnum]=0;
                     lolx.push(auxnum);
-                    dat[i][auxnum]=dat[i][dat[i].length-2];
+                    dat2[i][auxnum]=dat[i][dat[i].length-2];
                  }else if(dat[i][dat[i].length-2]<dat[dat.length-2][auxnum]){
                     dat[dat.length-2][auxnum]=Number(dat[dat.length-2][auxnum]- dat[i][dat[i].length-2]);
                     dat[i][dat[i].length-2]=0;
                     loly.push(i);
-                    dat[i][auxnum]=dat[dat.length-2][auxnum];
+                    dat2[i][auxnum]=dat[dat.length-2][auxnum];
                 }
                 puntos.push([i,auxnum]);
             }
@@ -377,22 +396,23 @@ function Pgen(nf,nc){
                  console.log("oferta: "+dat[auxnum][dat[auxnum].length-2]+" DEMANDA: "+dat[dat.length-2][j]);
                  tmp.length=0;
                  if(dat[auxnum][dat[auxnum].length-2]==dat[dat.length-2][j]){
+                    dat2[auxnum][j]=dat[dat.length-2][j];
                     dat[dat.length-2][j]=0;
                     dat[auxnum][dat[auxnum].length-2]=0;
                     lolx.push(j);
                     loly.push(auxnum);
-                    dat[auxnum][j]=dat[dat.length-2][j];
+                    
 
                  }else if(dat[auxnum][dat[auxnum].length-2]>dat[dat.length-2][j]){
                     dat[auxnum][dat[auxnum].length-2]= Number(dat[auxnum][dat[auxnum].length-2]-dat[dat.length-2][j]);
                     dat[dat.length-2][j]=0;
                     lolx.push(j);
-                    dat[auxnum][j]=dat[auxnum][dat[auxnum].length-2];
+                    dat2[auxnum][j]=dat[auxnum][dat[auxnum].length-2];
                  }else if(dat[auxnum][dat[auxnum].length-2]<dat[dat.length-2][j]){
                     dat[dat.length-2][j]=Number(dat[dat.length-2][j]- dat[auxnum][dat[auxnum].length-2]);
                     dat[auxnum][dat[auxnum].length-2]=0;
                     loly.push(auxnum);
-                    dat[auxnum][j]=dat[dat.length-2][j];
+                    dat2[auxnum][j]=dat[dat.length-2][j];
                 }
                 puntos.push([auxnum,j]);
 
@@ -401,7 +421,11 @@ function Pgen(nf,nc){
     }
     
     //----------------------------------------------------------fin de transformacion
-
+    var contador=0;
+    var finish = false;
+do{
+    
+    contador++;
     //-------------------------------------------------nueva penalidad
     tmp.length=0;
     penof.length=0;
@@ -411,17 +435,24 @@ function Pgen(nf,nc){
     //dat.push(new Array(nx));
     for(var i=0;i<ny;i++){
 
-    if(compos(i,loly)){
+    if(compos(i,loly) ){
 
         for(var j=0;j<nx;j++){
-            if(compos(j,lolx)){
+            if(compos(j,lolx) ){
                 tmp.push(dat[i][j]);
             }            
          }
          aux = menores(tmp);
-
-        dat[i].push(Number(aux[1]-aux[0]));
-        penof.push(Number(aux[1]-aux[0]));                 //penalidad de la oferta
+         if(aux[1]>999){
+            dat[i][nx+1]="-";
+            penof.push("-");
+            finish=true;
+         }else{
+              dat[i][nx+1]=Number(aux[1]-aux[0]);
+              penof.push(Number(aux[1]-aux[0]));
+         }
+       
+                      //penalidad de la oferta
         console.log("of");
             console.log(penof);
         
@@ -430,21 +461,30 @@ function Pgen(nf,nc){
     }
         
     }
-    
+    tmp.length=0;
+    aux.length=0;
     
     for(var j=0;j<nx;j++){
 
-        if(compos(j,lolx)){
+        if(compos(j,lolx) ){
             for(var i=0;i<ny;i++){
-                if(compos(i,loly)){
+                if(compos(i,loly) ){
                     tmp.push(dat[i][j]);
                 }
-            
+                
             }
          aux = menores(tmp);
-         
-            dat[ny+1][j]=Number(aux[1]-aux[0]);
+         console.log("EO");
+         console.log(aux);
+            if(aux[1]>999){
+                dat[ny+1][j]="-";
+                pendem.push("-");
+                finish=true;
+            }else{
+                dat[ny+1][j]=Number(aux[1]-aux[0]);
             pendem.push(dat[ny+1][j]);//------------------------------penalidad de la demanda
+            }
+            
             console.log("dem");
         console.log(pendem);
             tmp.length=0;
@@ -470,6 +510,7 @@ function Pgen(nf,nc){
     console.log("ACA ESTA");
     console.log(lolx);
     console.log(loly);
+    console.log(puntos);
     for(var i=0;i<dat.length;i++){
         
         if(i==dat.length-2){
@@ -484,7 +525,7 @@ function Pgen(nf,nc){
             var lol = [i,j];
             
             if(compos(i,loly)){
-                if(compos(j,lolx)){
+                if(compos(j,lolx) ){
                     pcon+="<td class='text-center mx-auto'>"+dat[i][j]+"</td>"
                 }else{
                     pcon+="<td class='text-center mx-auto'>-</td>"
@@ -492,7 +533,133 @@ function Pgen(nf,nc){
                 
             }else if(compunto(puntos,lol)){
                // alert("hola :V");
-               pcon+="<td class='text-center mx-auto'>"+dat[i][j]+"</td>"
+               pcon+="<td class='text-center mx-auto'>"+dat2[i][j]+"</td>"
+            }else{
+                pcon+="<td class='text-center mx-auto'>-</td>"
+            }
+            
+            
+            //console.log(dat[i][j]);
+
+        }
+        pcon+="</tr>";
+
+    }
+    pcon+="</tbody> </table> </br>";
+
+    document.getElementById("result3").innerHTML+=pcon;
+    //------------------------------------------------- se busca la penalidad mayor
+    if(finish){
+        var indice = 0;
+        if(penof.length==1){
+            do{
+            for(var i=0;i<ny;i++){
+                if(dat[i][nx]>0){
+
+                    indice=dat[i][nx];
+                    //alert(indice);
+                   // alert("I"+indice);
+                    for(var j=0;j<nx;j++){
+                        if(dat[ny][j]>0){
+                         //  alert(dat[ny][j]);
+                            if(dat[ny][j]==dat[i][nx]){
+                                dat2[i][j]=dat[ny][j];
+                                dat[ny][j]=0;
+                                dat[i][nx]=0;
+                                lolx.push(j);
+                                loly.push(i);
+                            }else if(dat[ny][j]>dat[i][nx]){
+                                dat[ny][j]=dat[ny][j]-dat[i][nx];
+                                dat2[i][j]=dat[i][nx];
+                                dat[i][nx]=0;
+                                loly.push(i);
+                            }else if(dat[ny][j]<dat[i][nx]){
+                               // alert(dat[i][nx]+"-"+dat[ny][j]);
+                                dat[i][nx]=dat[i][nx]-dat[ny][j];
+                                dat2[i][j]=dat[ny][j];
+                                dat[ny][j]=0;
+                                lolx.push(j);
+                            }
+                            alert("dato:"+dat2[i][j]);
+                            puntos.push([i,j]);
+                            indice=dat[i][nx];
+                        }
+                    }
+                }
+            }
+            }while(indice>0);
+        }else if(pendem.length==1){
+            do{
+                for(var j=0;j<nx;j++){
+                    if(dat[ny][j]>0){
+                        indice=dat[ny][j];
+                        for(var i=0;i<ny;i++){
+                            if(dat[i][nx]>0){
+                                if(dat[ny][j]==dat[i][nx]){
+                                    dar2[i][j]=dat[ny][j];
+                                    dat[ny][j]=0;
+                                    dat[i][nx]=0;
+                                    lolx.push(j);
+                                    loly.push(i);
+                                }else if(dat[ny][j]>dat[i][nx]){
+                                    dat[ny][j]=dat[ny][j]-dat[i][nx];
+                                    dat2[i][j]= dat[i][nx];dat[i][nx]=0;
+                                    
+                                    loly.push(i);
+                                }else if(dat[ny][j]<dat[i][nx]){
+                                    dat[i][nx]=dat[i][nx]-dat[ny][j];
+                                    dat2[i][j]=dat[ny][j];
+                                    dat[ny][j]=0;
+
+                                    lolx.push(j);
+                                    
+                                }
+                                alert(dat2[i][j]);
+                                puntos.push([i,j]);
+                                indice=dat[ny][j];
+                            }
+                        }
+                    }
+                }
+                }while(indice>0);
+        }
+console.log("FINAL WII");
+console.log(puntos);
+        pcon = " ";
+    pcon += "<table style='background: none;' class='table'><thead> <tr> ";
+    pcon +="<th class='text-center mx-auto'>Origen/ Destino </th>";
+    
+    for(var i=0;i<dat[0].length-2;i++){
+        pcon+="<th class='text-center mx-auto'>"+Number(i+1)+"</th>";
+    }
+    pcon+="<th class='text-center mx-auto'>OFERTA</th> <th class='text-center mx-auto'>Penalidad </th></tr> </thead> <tbody>";
+    var valid = true;
+    console.log("ACA ESTA");
+    console.log(lolx);
+    console.log(loly);
+    for(var i=0;i<dat.length;i++){
+        
+        if(i==dat.length-2){
+            pcon+="<tr><td class='text-center mx-auto'>Demanda</td>";
+        }else if(i==dat.length-1){
+            pcon+="<tr><td class='text-center mx-auto'>Penalidad</td>";
+            
+        }else{
+            pcon+="<tr><td class='text-center mx-auto'>"+abc[i]+"</td>";
+        }    
+        for(var j=0;j<dat[i].length;j++){
+            var lol = [i,j];
+            
+            if(compos(i,loly)){
+                if(compos(j,lolx) ){
+                    pcon+="<td class='text-center mx-auto'>"+dat[i][j]+"</td>"
+                }else{
+                    pcon+="<td class='text-center mx-auto'>-</td>"
+                }
+                
+            }else if(compunto(puntos,lol)){
+               // alert("hola :V");
+               pcon+="<td class='text-center mx-auto'>"+dat2[i][j]+"</td>"
             }else{
                 pcon+="<td class='text-center mx-auto'>-</td>"
             }
@@ -508,6 +675,100 @@ function Pgen(nf,nc){
 
     document.getElementById("result3").innerHTML+=pcon;
 
+
+    }else{
+
+    
+    aux2.length=0;
+    aux2 = mayor(penof,pendem);
+    console.log("WII");
+    console.log(aux2);
+    //--------------------------------------------------- se trasnforma para la nueva tabla
+    tmp.length=0;
+    if(aux2[0]=="O"){
+        for(var i=0;i<ny;i++){
+            if(compos(i,loly)){
+            if(dat[i][dat[i].length-1]==aux2[1]){
+                
+                for(var j=0;j<nx;j++){
+                    if(compos(j,lolx)){
+                        tmp.push(dat[i][j]);
+                    }else{
+                        tmp.push(9999999);
+                    }
+                    
+                 }
+                 auxnum = menorpos(tmp);
+                 console.log("oferta: "+dat[i][dat[i].length-2]+" DEMANDA: "+dat[dat.length-2][auxnum]);
+                 tmp.length=0;
+                 if(dat[i][dat[i].length-2]==dat[dat.length-2][auxnum]){
+                    dat2[i][auxnum]=dat[dat.length-2][auxnum];
+
+                    dat[dat.length-2][auxnum]=0;
+                    dat[i][dat[i].length-2]=0;
+                    lolx.push(auxnum);
+                    loly.push(i);
+                    
+
+                 }else if(dat[i][dat[i].length-2]>dat[dat.length-2][auxnum]){
+                    dat[i][dat[i].length-2]= Number(dat[i][dat[i].length-2]-dat[dat.length-2][auxnum]);
+                    dat[dat.length-2][auxnum]=0;
+                    lolx.push(auxnum);
+                    dat2[i][auxnum]=dat[i][dat[i].length-2];
+                 }else if(dat[i][dat[i].length-2]<dat[dat.length-2][auxnum]){
+                    dat[dat.length-2][auxnum]=Number(dat[dat.length-2][auxnum]- dat[i][dat[i].length-2]);
+                    dat[i][dat[i].length-2]=0;
+                    loly.push(i);
+                    dat2[i][auxnum]=dat[dat.length-2][auxnum];
+                }
+                puntos.push([i,auxnum]);
+            }
+            }
+        }
+    
+    }else{
+        for(var j=0;j<nx;j++){
+            if(compos(j,lolx)){
+            if(dat[dat.length-2][j]==aux2[1]){
+                for(var i=0;i<ny;i++){
+                    if(compos(i,loly)){
+                        tmp.push(dat[i][j]);
+                    }else{
+                        tmp.push(99999999);
+                    }
+                   
+                 }
+                 auxnum = menorpos(tmp);
+                 console.log("oferta: "+dat[auxnum][dat[auxnum].length-2]+" DEMANDA: "+dat[dat.length-2][j]);
+                 tmp.length=0;
+                 if(dat[auxnum][dat[auxnum].length-2]==dat[dat.length-2][j]){
+                    dat2[auxnum][j]=dat[dat.length-2][j];
+                    dat[dat.length-2][j]=0;
+                    dat[auxnum][dat[auxnum].length-2]=0;
+                    lolx.push(j);
+                    loly.push(auxnum);
+                    
+
+                 }else if(dat[auxnum][dat[auxnum].length-2]>dat[dat.length-2][j]){
+                    dat[auxnum][dat[auxnum].length-2]= Number(dat[auxnum][dat[auxnum].length-2]-dat[dat.length-2][j]);
+                    dat[dat.length-2][j]=0;
+                    lolx.push(j);
+                    dat2[auxnum][j]=dat[auxnum][dat[auxnum].length-2];
+                 }else if(dat[auxnum][dat[auxnum].length-2]<dat[dat.length-2][j]){
+                    dat[dat.length-2][j]=Number(dat[dat.length-2][j]- dat[auxnum][dat[auxnum].length-2]);
+                    dat[auxnum][dat[auxnum].length-2]=0;
+                    loly.push(auxnum);
+                    dat2[auxnum][j]=dat[dat.length-2][j];
+                }
+                puntos.push([auxnum,j]);
+
+            }
+            }
+        }
+    }
+ }
+ 
+ }while(contador<3);
 
 
 }
