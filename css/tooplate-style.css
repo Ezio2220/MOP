@@ -17,7 +17,7 @@ body {
 }
 
 .modal-content{
-  left:-35%;
+  left:-50%;
   margin:auto;
   display:table;
   border:1px solid;
@@ -28,7 +28,7 @@ body {
   overflow-x: initial !important
 }
 .modal-body{
-  max-width: 800px;
+  max-width: 1000px;
   overflow-x: auto;
 }
 
