@@ -246,16 +246,47 @@ function Pgen(nf,nc){
 
      }
      //-----------------------penalidad
+    
+     var tmp = [];
+     var aux =[];
+     var penof = [];
+     var pendem = [];
+     
+//--------------------------------------calculo de las penalidades
     dat.push(new Array(nx));
     for(var i=0;i<ny;i++){
-        dat[i].push(0);
-        
-    }
-    for(var j=0;j<nx;j++){
-            dat[ny+1][j]=0;
 
+        for(var j=0;j<nx;j++){
+            tmp.push(dat[i][j]);
+         }
+         aux = menores(tmp);
+
+        dat[i].push(Number(aux[1]-aux[0]));
+        penof.push(Number(aux[1]-aux[0]));                 //penalidad de la oferta
+        
+        /*console.log("dem");
+        console.log(pendem);*/
+        tmp.length=0;
+        aux.length=0;
     }
-    //--------------------penalidad
+    
+    
+    for(var j=0;j<nx;j++){
+
+        for(var i=0;i<ny;i++){
+            tmp.push(dat[i][j]);
+         }
+         aux = menores(tmp);
+         
+            dat[ny+1][j]=Number(aux[1]-aux[0]);
+            pendem.push(dat[ny+1][j]);//------------------------------penalidad de la demanda
+           /* console.log("of");
+            console.log(penof);*/
+            tmp.length=0;
+            aux.length=0;
+    }
+    
+    //-------------------- fin de calculo de penalidad
      console.log(dat);
     //--------------mostrando tabla;
     var pcon = " ";
@@ -270,9 +301,10 @@ function Pgen(nf,nc){
 
     for(var i=0;i<dat.length;i++){
         if(i==dat.length-2){
-            pcon+="<tr><td class='text-center mx-auto'>Penalidad</td>";
-        }else if(i==dat.length-1){
             pcon+="<tr><td class='text-center mx-auto'>Demanda</td>";
+        }else if(i==dat.length-1){
+            pcon+="<tr><td class='text-center mx-auto'>Penalidad</td>";
+            
         }else{
             pcon+="<tr><td class='text-center mx-auto'>"+abc[i]+"</td>";
         }    
@@ -288,8 +320,286 @@ function Pgen(nf,nc){
     pcon+="</tbody> </table> </br>";
 
     document.getElementById("result2").innerHTML=pcon;
+    var lolact=0;
+    //--------------------------------se obtiene la penalidad mayor ya sea de la oferta o de la demanda
+    var aux2 = [];
+    aux2 = mayor(penof,pendem);
+
+    console.log(aux2);
+    var auxnum= 0;
+    var lolx = [];
+    var loly = [];
+    var puntos = [];
+    //puntos[lolact] = new Array(2);
+
+    //------------------------- se opera
+    if(aux2[0]=="O"){
+        for(var i=0;i<ny;i++){
+            if(dat[i][dat[i].length-1]==aux2[1]){
+                
+                for(var j=0;j<nx;j++){
+                    tmp.push(dat[i][j]);
+                 }
+                 auxnum = menorpos(tmp);
+                 console.log("oferta: "+dat[i][dat[i].length-2]+" DEMANDA: "+dat[dat.length-2][auxnum]);
+                 tmp.length=0;
+                 if(dat[i][dat[i].length-2]==dat[dat.length-2][auxnum]){
+                    dat[i][auxnum]=dat[dat.length-2][auxnum];
+
+                    dat[dat.length-2][auxnum]=0;
+                    dat[i][dat[i].length-2]=0;
+                    lolx.push(auxnum);
+                    loly.push(i);
+                    
+
+                 }else if(dat[i][dat[i].length-2]>dat[dat.length-2][auxnum]){
+                    dat[i][dat[i].length-2]= Number(dat[i][dat[i].length-2]-dat[dat.length-2][auxnum]);
+                    dat[dat.length-2][auxnum]=0;
+                    lolx.push(auxnum);
+                    dat[i][auxnum]=dat[i][dat[i].length-2];
+                 }else if(dat[i][dat[i].length-2]<dat[dat.length-2][auxnum]){
+                    dat[dat.length-2][auxnum]=Number(dat[dat.length-2][auxnum]- dat[i][dat[i].length-2]);
+                    dat[i][dat[i].length-2]=0;
+                    loly.push(i);
+                    dat[i][auxnum]=dat[dat.length-2][auxnum];
+                }
+                puntos.push([i,auxnum]);
+            }
+        }
+    
+    }else{
+        for(var j=0;j<nx;j++){
+            if(dat[dat.length-2][j]==aux2[1]){
+                for(var i=0;i<ny;i++){
+                    tmp.push(dat[i][j]);
+                 }
+                 auxnum = menorpos(tmp);
+                 console.log("oferta: "+dat[auxnum][dat[auxnum].length-2]+" DEMANDA: "+dat[dat.length-2][j]);
+                 tmp.length=0;
+                 if(dat[auxnum][dat[auxnum].length-2]==dat[dat.length-2][j]){
+                    dat[dat.length-2][j]=0;
+                    dat[auxnum][dat[auxnum].length-2]=0;
+                    lolx.push(j);
+                    loly.push(auxnum);
+                    dat[auxnum][j]=dat[dat.length-2][j];
+
+                 }else if(dat[auxnum][dat[auxnum].length-2]>dat[dat.length-2][j]){
+                    dat[auxnum][dat[auxnum].length-2]= Number(dat[auxnum][dat[auxnum].length-2]-dat[dat.length-2][j]);
+                    dat[dat.length-2][j]=0;
+                    lolx.push(j);
+                    dat[auxnum][j]=dat[auxnum][dat[auxnum].length-2];
+                 }else if(dat[auxnum][dat[auxnum].length-2]<dat[dat.length-2][j]){
+                    dat[dat.length-2][j]=Number(dat[dat.length-2][j]- dat[auxnum][dat[auxnum].length-2]);
+                    dat[auxnum][dat[auxnum].length-2]=0;
+                    loly.push(auxnum);
+                    dat[auxnum][j]=dat[dat.length-2][j];
+                }
+                puntos.push([auxnum,j]);
+
+            }
+        }
+    }
+    
+    //----------------------------------------------------------fin de transformacion
+
+    //-------------------------------------------------nueva penalidad
+    tmp.length=0;
+    penof.length=0;
+    pendem.length=0;
+    aux.length=0;
+
+    //dat.push(new Array(nx));
+    for(var i=0;i<ny;i++){
+
+    if(compos(i,loly)){
+
+        for(var j=0;j<nx;j++){
+            if(compos(j,lolx)){
+                tmp.push(dat[i][j]);
+            }            
+         }
+         aux = menores(tmp);
+
+        dat[i].push(Number(aux[1]-aux[0]));
+        penof.push(Number(aux[1]-aux[0]));                 //penalidad de la oferta
+        console.log("of");
+            console.log(penof);
+        
+        tmp.length=0;
+        aux.length=0;
+    }
+        
+    }
+    
+    
+    for(var j=0;j<nx;j++){
+
+        if(compos(j,lolx)){
+            for(var i=0;i<ny;i++){
+                if(compos(i,loly)){
+                    tmp.push(dat[i][j]);
+                }
+            
+            }
+         aux = menores(tmp);
+         
+            dat[ny+1][j]=Number(aux[1]-aux[0]);
+            pendem.push(dat[ny+1][j]);//------------------------------penalidad de la demanda
+            console.log("dem");
+        console.log(pendem);
+            tmp.length=0;
+            aux.length=0;
+        }
+        
+    }
+
+    //-------------------------------------------------fin de nueva penalidad
+
+
+    //----------------------------------------------------------dibujar nueva tabla
+
+    pcon = " ";
+    pcon += "<table style='background: none;' class='table'><thead> <tr> ";
+    pcon +="<th class='text-center mx-auto'>Origen/ Destino </th>";
+    
+    for(var i=0;i<dat[0].length-2;i++){
+        pcon+="<th class='text-center mx-auto'>"+Number(i+1)+"</th>";
+    }
+    pcon+="<th class='text-center mx-auto'>OFERTA</th> <th class='text-center mx-auto'>Penalidad </th></tr> </thead> <tbody>";
+    var valid = true;
+    console.log("ACA ESTA");
+    console.log(lolx);
+    console.log(loly);
+    for(var i=0;i<dat.length;i++){
+        
+        if(i==dat.length-2){
+            pcon+="<tr><td class='text-center mx-auto'>Demanda</td>";
+        }else if(i==dat.length-1){
+            pcon+="<tr><td class='text-center mx-auto'>Penalidad</td>";
+            
+        }else{
+            pcon+="<tr><td class='text-center mx-auto'>"+abc[i]+"</td>";
+        }    
+        for(var j=0;j<dat[i].length;j++){
+            var lol = [i,j];
+            
+            if(compos(i,loly)){
+                if(compos(j,lolx)){
+                    pcon+="<td class='text-center mx-auto'>"+dat[i][j]+"</td>"
+                }else{
+                    pcon+="<td class='text-center mx-auto'>-</td>"
+                }
+                
+            }else if(compunto(puntos,lol)){
+               // alert("hola :V");
+               pcon+="<td class='text-center mx-auto'>"+dat[i][j]+"</td>"
+            }else{
+                pcon+="<td class='text-center mx-auto'>-</td>"
+            }
+            
+            
+            //console.log(dat[i][j]);
+
+        }
+        pcon+="</tr>";
+
+    }
+    pcon+="</tbody> </table> </br>";
+
+    document.getElementById("result3").innerHTML+=pcon;
 
 
 
+}
+function compunto(arr1,arr2){
+    var x1= arr1;
+    var x2=arr2;
+    console.log("el array");
+    console.log(x1);
+    console.log(x2);
+    for(var i=0;i<arr1.length;i++){
+      //  alert("es "+x1[i][0]+" y "+x2[0] );
+        if(x1[i][0]==x2[0]){
+            
 
+            if(x1[i][1]==x2[1]){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function compos(i,arr){
+
+    var x= arr;
+    for(var j=0;j<x.length;j++){
+        if(i==Number(x[j])){
+            
+            return false;
+        }
+    }
+    return true;
+
+}
+function menorpos(arr){
+    var x= arr;
+    var salto = 0;
+    var resp = 99999;
+    for(var i=0;i<x.length;i++){
+        if(resp>x[i]){
+            resp=x[i];
+            salto=i;
+        }
+    }
+    return salto;
+}
+
+function menores(arr){
+    var x = arr;
+    var resp = [9999,9999];
+    var salto = 0;
+    for(var i=0;i<x.length;i++){
+            if(resp[0]>x[i]){
+                resp[0]=x[i];
+                salto=i;
+            }
+    }
+    for(var i=0;i<x.length;i++){
+        if(i!=salto){
+            if(resp[1]>x[i]){
+                resp[1]=x[i];
+            }
+      }
+    }
+    /*arr.sort(function(a, b) {
+        return a - b;
+      });
+    console.log("ESTO ES VE: ");
+    console.log(arr);*/
+    return resp;
+}
+function mayor(arr,arr2){
+    var x1 =arr;
+    var x2 =arr2;
+    /*console.log("este es uno");
+    console.log(arr);
+    console.log("este es 2");
+    console.log(arr2);*/
+    var resp = ["O",0];
+    x1.sort(function(a, b) {
+        return a - b;
+      });
+    resp[1]=Number(x1[x1.length-1]);
+
+    x2.sort(function(a, b) {
+        return a - b;
+      });
+
+    if(x2[x2.length-1]>resp[1]){
+        resp[0]="D";
+        resp[1]=x2[x2.length-1];
+    }
+    
+    return resp;
 }
