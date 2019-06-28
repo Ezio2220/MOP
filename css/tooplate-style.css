@@ -12,23 +12,25 @@ body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   color: #ffffff;
-  overflow-x: hidden;
+  overflow-x: scroll;
   background: #25332e;
 }
 
 .modal-content{
-
-  margin:0 auto;
+  left:-50%;
+  margin:auto;
   display:table;
-  position: absolute;
-  left: -150%;
-  right:0;
-  top: -20%; 
   border:1px solid;
   color:black;
 
 }
-
+.modal-dialog{
+  overflow-x: initial !important
+}
+.modal-body{
+  max-width: 1000px;
+  overflow-x: auto;
+}
 
 a {
   transition: all 0.2s;
