@@ -547,7 +547,7 @@ do{
     }
     pcon+="</tbody> </table> </br>";
 
-    document.getElementById("result3").innerHTML+=pcon;
+    document.getElementById("pasosT").innerHTML+=pcon;
     //------------------------------------------------- se busca la penalidad mayor
     if(finish){
         var indice = 0;
@@ -672,7 +672,7 @@ console.log(puntos);
 
     }
     pcon+="</tbody> </table> </br>";
-    pcon+="<h3> SOlucion </h3><br>";
+    pcon+="<h3> Solucion </h3><br>";
     var Zres=0;
     console.log("RESPUESTA");
     
@@ -682,8 +682,6 @@ console.log(puntos);
         Zres+=Number(dat2[puntos[i][0]][puntos[i][1]]*dat[puntos[i][0]][puntos[i][1]]);
         console.log(Number(dat2[puntos[i][0]][puntos[i][1]]*dat[puntos[i][0]][puntos[i][1]]));
     }
-    pcon+="<h3> Z="+Zres+" </h3><br>"
-    document.getElementById("result3").innerHTML+=pcon;
 
 
     }else{
@@ -780,7 +778,8 @@ console.log(puntos);
  
  }while(contador<3);
 
-
+    pcon+="<h3> Z="+Zres+" </h3><br>"
+    document.getElementById("result3").innerHTML+=pcon;
 }
 function compunto(arr1,arr2){
     var x1= arr1;
