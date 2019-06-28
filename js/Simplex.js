@@ -395,8 +395,9 @@ var pos=[];
     var ve;var nve; var vs; var nvs;
    // var temporal = rest;
    // console.log(temporal);
-    
+    var cont = 0;
 do{
+    cont++
     //aca en el inicio podes ir agregando como las intrsucciones o mejor solo ponele paso 1 paso 2 etc como no sabes 
     //cuantos pasos seran podes crear un contador que empieze en 1 y a medida se repita el do while vaya aumentado y para
     //irlo mostrando aca al incio podes crear un contenido2 = " "; contenido2+= "<h3><u>PASO "+varde_contador+"</u></h3> <br>";
@@ -423,10 +424,50 @@ do{
     //console.log( "esto es: "+nvs+"con:"+Bi[0]+"/"+rest[0][ve]);
     for(var i=1;i<nr;i++){
      //  alert(i+"esto es: "+nvs+"con:"+Bi[i]+"/"+rest[i][ve]);
-        if( (Number(Bi[i])/Number(rest[i][ve])) < nvs ){
+        if( (Number(Bi[i])/Number(rest[i][ve])) < nvs  && (Number(Bi[i])/Number(rest[i][ve])) >0 ){
             vs=Number(pos[i]); nvs= (Number(Bi[i])/Number(rest[i][ve]));
         }
     }
+    for(var i=1;i<nr;i++){
+        //  alert(i+"esto es: "+nvs+"con:"+Bi[i]+"/"+rest[i][ve]);
+           if( nvs == (Number(Bi[i])/Number(rest[i][ve])) ){
+               if(pos[i]!=vs){
+                   var nvs2;
+                   var c=0;
+                    do{
+                        
+                       if(ve==0 || ve+c ==0){
+                         c++;
+                         nvs= (Number(Bi[vs])/Number(rest[vs][ve+c]));
+                         nvs2=(Number(Bi[i])/Number(rest[i][ve+c]));
+                         if(nvs<nvs2){
+                             nvs=nvs;
+                             vs=Number(vs);
+                         }else if(nvs>nvs2){
+                            nvs=nvs2;
+                            nvs2=0;
+                            vs=Number(pos[i]);
+                         }
+                       }else{
+                         c--;
+                         nvs= (Number(Bi[vs])/Number(rest[vs][ve+c]));
+                         nvs2=(Number(Bi[i])/Number(rest[i][ve+c]));
+                         if(nvs<nvs2){
+                            nvs=nvs;
+                            vs=Number(vs);
+                        }else if(nvs>nvs2){
+                           nvs=nvs2;
+                           nvs2=0;
+                           vs=Number(pos[i]);
+                        }
+                       } 
+                    }while(nvs==nvs2);
+                   i=nr;
+
+               }
+           }
+       }
+    
     //---------------------------------------------------numero de var de salida
     var pvs;
     console.log("VE: X"+Number(ve+1)+" Y VS: X"+Number(vs));
@@ -587,7 +628,11 @@ do{
     }
 
    //----------------------------------TODO LO DE ESTE WHILE SON LAS INTERACIONES QUE  SE HACEN para la solucion     
+    if(cont>=10){
+        valid=true;
+    }
 }while(!valid);
+
         var modalS = document.getElementById("pasosS")
         modalS.innerHTML = contenido2; 
         contenido2="";
