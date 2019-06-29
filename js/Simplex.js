@@ -245,8 +245,9 @@ var pos=[];
     }
     
     var plano2 = document.getElementById("Stabla2");
+//-----------------------------------------------------------------------------------------------------------------------------------------TABLASSSSSSSSSSSSSSSSSSSSSSSSSSs
 
-    /*contenido2 += "<table class='table'> <thead> <tr> <th class='text-center mx-auto'>V.b</th> ";
+    contenido2 += "<table class='table'> <thead> <tr> <th class='text-center mx-auto'>V.b</th> ";
     
     for(var i=0;i<NVF;i++){
         contenido2+="<th class='text-center'>X"+(i+1)+"</th>";
@@ -262,11 +263,22 @@ var pos=[];
     }
     contenido2+="<tr><td class='text-center'><b>Z</b></td>";
     for(var i=0;i<NVF;i++){
-        contenido2+="<td class='text-center'> "+Z[i]+" </td>";
+        if(Z[i]==1 || Z[i]==-1){
+            if(Z[i]==1){
+                contenido2+="<td class='text-center'> M </td>";
+            }else{
+                contenido2+="<td class='text-center'> -M </td>";
+            }
+        }else{
+            contenido2+="<td class='text-center'> "+Z[i]+" </td>";
+        }
+        
     }
     contenido2+="<td class='text-center'> "+Bi[nr]+"</td> </tr> </tbody> </table> </br></br>";
-*/
+
+//-----------------------------------------------------------------------------------------------------------------------------------------TABLASSSSSSSSSSSSSSSSSSSSSSSSSSs
     plano2.innerHTML = contenido2;
+    contenido=" ";
 //----------------------------------------------------------------------------------------------------
     
     //agregacion de los M de Z
@@ -421,10 +433,27 @@ do{
 //-----------------------------------------------------------------VARIABLE DE SALIDA
     vs=pos[0];
     nvs = Number(Bi[0])/Number(rest[0][ve]);
+    var itcomp;
+    itcomp=0;
+        
+        if(nvs<0){
+            for(var i=0;i<nr;i++){
+                if(Number(Bi[i])/Number(rest[i][ve])>0){
+                    vs=Number(pos[i]); nvs= (Number(Bi[i])/Number(rest[i][ve]));
+                    i=nr;
+                }
+            }
+           // alert( "1"+nvs);
+        }
+
+   /* if(Number(nvs)<0){
+        alert(nvs);
+        nvs = Number(Bi[0])/Number(rest[0][ve]);
+    }*/
     //console.log( "esto es: "+nvs+"con:"+Bi[0]+"/"+rest[0][ve]);
-    for(var i=1;i<nr;i++){
+    for(var i=0;i<nr;i++){
      //  alert(i+"esto es: "+nvs+"con:"+Bi[i]+"/"+rest[i][ve]);
-        if( (Number(Bi[i])/Number(rest[i][ve])) < nvs  && (Number(Bi[i])/Number(rest[i][ve])) >0 ){
+        if( (Number(Bi[i])/Number(rest[i][ve])) < nvs  && (Number(Bi[i])/Number(rest[i][ve])) > 0 ){
             vs=Number(pos[i]); nvs= (Number(Bi[i])/Number(rest[i][ve]));
         }
     }
@@ -471,6 +500,7 @@ do{
     //---------------------------------------------------numero de var de salida
     var pvs;
     console.log("VE: X"+Number(ve+1)+" Y VS: X"+Number(vs));
+    contenido2+="VE: X"+Number(ve+1)+" Y VS: X"+Number(vs)+"</br>";
    // alert("VE: X"+Number(ve+1)+" Y VS: X"+Number(vs));
     for(var i=0;i<pos.length;i++){
         if(pos[i]==vs){
